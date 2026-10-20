@@ -1,7 +1,7 @@
-{{- /* Sub-pages take the name only as a suffix, so they never outrank the
-       home page. */ -}}
+{{- /* The home page is the name alone. Sub-pages take the name only as a
+       suffix, so they never outrank the home page. */ -}}
 {{- if .IsHome -}}
-<title>{{ site.Title }}{{ with .Params.tagline }} — {{ . }}{{ end }}</title>
+<title>{{ site.Title }}</title>
 {{- else -}}
 <title>{{ .Title }} — {{ site.Title }}</title>
 {{- end -}}
