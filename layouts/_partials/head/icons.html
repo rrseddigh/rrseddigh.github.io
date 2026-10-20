@@ -1,0 +1,8 @@
+{{- /* Tab and bookmark icons: the star medallion at the centre of the
+       background tilework, cropped square. The files live in static/ at the
+       site root because browsers ask for /favicon.ico on their own (for the
+       CV PDF opened in a tab, for instance), and iOS for
+       /apple-touch-icon.png. favicon.ico carries 16, 32 and 48px. */ -}}
+<link rel="icon" href="{{ "favicon.ico" | relURL }}" sizes="16x16 32x32 48x48">
+<link rel="icon" href="{{ "icon-192.png" | relURL }}" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
