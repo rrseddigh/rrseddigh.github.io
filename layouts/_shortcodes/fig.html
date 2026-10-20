@@ -1,0 +1,36 @@
+{{- /* A figure from a page-bundle resource, with a caption.
+
+       The image lives in the section's own directory, so both language
+       versions of the page share one file — the same arrangement the
+       photography gallery uses. Only the caption is translated.
+
+       These are diagrams lifted from a slide deck: line art on white, so they
+       are kept as PNG rather than pushed through WebP's lossy path, where thin
+       black strokes on white pick up ringing. Hugo's PNG re-encode is
+       lossless. */ -}}
+{{- $src := .Get "src" -}}
+{{- if not $src }}{{ errorf "fig: src required at %s" .Position }}{{ end -}}
+{{- $r := .Page.Resources.GetMatch $src -}}
+{{- if not $r }}{{ errorf "fig: no resource %q in %s" $src .Page.File.Filename }}{{ end -}}
+{{- $alt := .Get "alt" | default "" -}}
+{{- $cap := .Get "caption" | default "" -}}
+{{- /* Cap the intrinsic width; these are small diagrams and upscaling a
+       683px crop to 1400 only makes the file bigger, not the lines sharper. */ -}}
+{{- $w  := cond (gt $r.Width 900) 900 $r.Width -}}
+{{- $lg := $r.Resize (printf "%dx png" $w) -}}
+{{- $sm := $r.Resize (printf "%dx png" (div $w 2)) -}}
+<figure class="fig{{ with .Get "class" }} {{ . }}{{ end }}">
+  <img srcset="{{ $sm.RelPermalink }} {{ $sm.Width }}w, {{ $lg.RelPermalink }} {{ $lg.Width }}w"
+       sizes="(max-width: 40rem) 100vw, {{ $lg.Width }}px"
+       src="{{ $lg.RelPermalink }}"
+       width="{{ $lg.Width }}" height="{{ $lg.Height }}"
+       alt="{{ $alt }}" loading="lazy" decoding="async">
+  {{- with $cap }}
+  {{- /* RenderString, not safeHTML: a shortcode parameter is a plain string
+         and never sees the Markdown parser, so *G* came out with its asterisks
+         showing. display=inline keeps Goldmark from wrapping it in a <p>
+         inside the <figcaption>. Raw <sup>/<sub> pass through because
+         goldmark.renderer.unsafe is on. */ -}}
+  <figcaption>{{ $.Page.RenderString (dict "display" "inline") . }}</figcaption>
+  {{- end }}
+</figure>

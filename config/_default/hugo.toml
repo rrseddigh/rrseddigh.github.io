@@ -1,0 +1,51 @@
+# Local development. The production build takes its baseURL from
+# config/production/hugo.toml.
+baseURL                        = 'http://localhost:1313/'
+title                          = 'Remi Seddigh'
+
+defaultContentLanguage         = 'en'
+defaultContentLanguageInSubdir = false      # EN at /, FR at /fr/
+enableRobotsTXT                = true
+disableKinds                   = ['taxonomy', 'term']   # no tags/categories on this site
+capitalizeListTitles           = false
+timeZone                       = 'America/Los_Angeles'
+canonifyURLs                   = false      # canonicals are emitted explicitly
+
+[minify]
+  minifyOutput = true
+  [minify.tdewolff.html]
+    keepQuotes = true
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true              # needed for raw <sup>/<sub> in figure captions
+  [markup.goldmark.extensions]
+    typographer = false        # keep quotes and dashes exactly as typed
+  [markup.goldmark.extensions.passthrough]
+    enable = true              # math on the research page
+    [markup.goldmark.extensions.passthrough.delimiters]
+      block  = [['\[', '\]'], ['$$', '$$']]
+      # $...$ as well as \(...\), the way formulas are written in a paper.
+      # Rendered by layouts/_markup/render-passthrough.html.
+      # The cost is that a bare dollar sign in prose now starts a formula, so
+      # a price has to be written \$5.
+      inline = [['\(', '\)'], ['$', '$']]
+
+[sitemap]
+  changefreq = ''
+  priority   = -1              # omit <priority>; Google ignores it
+
+[outputs]
+  home    = ['html', 'rss']
+  section = ['html']
+  page    = ['html']
+
+[imaging]
+  resampleFilter = 'Lanczos'
+  [imaging.jpeg]
+    quality = 82
+  [imaging.webp]
+    quality = 82
+  [imaging.exif]
+    disableDate    = true
+    disableLatLong = true      # never leak GPS from phone photos

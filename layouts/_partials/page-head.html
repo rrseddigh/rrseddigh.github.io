@@ -1,0 +1,6 @@
+{{- /* Page title block. 50-hero.css hides the <h1> visually (the title band
+       carries the title) and keeps the tagline. */ -}}
+<div class="page-head">
+  <h1>{{ .Title }}</h1>
+  {{- with .Params.tagline }}<p class="lede">{{ . }}</p>{{ end }}
+</div>

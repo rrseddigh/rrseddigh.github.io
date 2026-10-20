@@ -1,0 +1,12 @@
+{{ define "main" }}
+  {{ partial "page-head.html" . }}
+  <article class="prose">
+    {{ .Content }}
+  </article>
+  {{- /* Outside .prose on purpose. .prose is capped at --measure, a READING
+         width in `ch`, and a grid sized off that would change its column
+         count with the typeface. The gallery sets its own width in rem. */ -}}
+  {{- if .Params.gallery }}
+    {{ partial "gallery.html" . }}
+  {{- end }}
+{{ end }}

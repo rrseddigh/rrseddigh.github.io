@@ -1,0 +1,19 @@
+# Hugo >= 0.158 key names: direction / label / locale.
+
+[en]
+  label     = 'English'
+  locale    = 'en-US'
+  direction = 'ltr'
+  weight    = 1
+  title     = 'Remi Seddigh'
+  [en.params]
+    short = 'EN'
+
+[fr]
+  label     = 'Français'
+  locale    = 'fr-FR'
+  direction = 'ltr'
+  weight    = 2
+  title     = 'Rémi Seddigh'
+  [fr.params]
+    short = 'FR'

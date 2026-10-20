@@ -1,0 +1,112 @@
+{{- /* Photography gallery. Images are page-bundle resources, so the same
+       files serve the en/fr index pages in this directory — no duplication.
+
+       Per frame:
+         alt      — long visual description, for screen readers
+         caption  — visible line: what the picture is
+         title    — short line, shown as the browser tooltip on hover
+
+       The © line is rendered ONCE below the grid, covering every frame,
+       rather than repeating on each figure. The JPEGs carry it in their EXIF
+       as well, so it travels with the file.
+
+       Each frame is a real <a> to the full-size image. assets/js/lightbox.js
+       intercepts the click and opens a dialog instead; with JS off or broken
+       the link still works, which is why it is a link and not a button. */ -}}
+{{- $meta   := hugo.Data.photography -}}
+{{- $dates  := hugo.Data.photodates | default dict -}}
+{{- $lang   := .Language.Name -}}
+{{- $credit := $meta.credit | default "" -}}
+{{- $note   := "" -}}
+{{- with $meta.credit_note }}{{ $note = index . $lang | default (index . "en") }}{{ end -}}
+{{- $imgs   := .Resources.ByType "image" -}}
+{{- with $imgs }}
+<div class="gallery">
+  {{- range . }}
+    {{- $key := path.BaseName .Name -}}
+    {{- $m   := index $meta.photos $key -}}
+    {{- $alt := "" }}{{ $cap := "" }}{{ $ttl := "" }}{{ $place := "" -}}
+    {{- with $m -}}
+      {{- with .alt     }}{{ $alt = index . $lang | default (index . "en") }}{{ end -}}
+      {{- with .caption }}{{ $cap = index . $lang | default (index . "en") }}{{ end -}}
+      {{- with .title   }}{{ $ttl = index . $lang | default (index . "en") }}{{ end -}}
+      {{- with .place   }}{{ $place = index . $lang | default (index . "en") }}{{ end -}}
+    {{- end -}}
+    {{- /* "<Subject>. <Place>", the place in italics. Assembled here so the
+           data file carries words and nothing else: no full stops to keep in
+           step, no markup to retype. A frame with no place is just its
+           caption. */ -}}
+    {{- if and $cap $place }}
+      {{- /* TrimSuffix: a caption typed with its own full stop would otherwise
+             come out "…tree.. Place". */ -}}
+      {{- $cap = printf `%s. <em class="gallery__place">%s</em>` (strings.TrimSuffix "." $cap) $place -}}
+    {{- end -}}
+    {{- /* The capture date, month and year, in the lightbox only: the grid
+           caption says what and where, the opened picture adds when. From
+           data/photodates.yaml, since the published files carry no date.
+           time.Format localises the month name for the page language. */ -}}
+    {{- $lbcap := $cap -}}
+    {{- with index $dates $key }}
+      {{- $when := time.Format "January 2006" (time.AsTime .) -}}
+      {{- $lbcap = printf `%s<span class="lightbox__date">%s</span>` $lbcap $when -}}
+    {{- end -}}
+    {{- /* q86 throughout. The grid shows a frame at about 20rem, which on a
+           2x screen is a 640px fetch of the 700w copy, and on a 3x phone at
+           full width over 1100px of the 1200w; at q80 the WebP softened
+           visibly at those sizes. The fourth candidate is for wide 2x and 3x
+           screens, which were being served the 1800w upscaled. */ -}}
+    {{- $sm := .Resize "700x webp q86" -}}
+    {{- $md := .Resize "1200x webp q86" -}}
+    {{- $lg := .Resize "1800x webp q86" -}}
+    {{- $xl := .Resize "2400x webp q86" -}}
+    {{- /* Fit, not Resize: the sources are 2800px on the LONG edge, so a
+           width-only resize would upscale every portrait frame. 2400 fills a
+           2x laptop screen's lightbox edge to edge. */ -}}
+    {{- $full := .Fit "2400x2400 webp q88" -}}
+  <figure class="gallery__item">
+    <a class="gallery__link"
+       href="{{ $full.RelPermalink }}"
+       data-w="{{ $full.Width }}" data-h="{{ $full.Height }}"
+       data-caption="{{ $lbcap }}"
+       data-alt="{{ $alt }}"
+       aria-label="{{ with $ttl }}{{ . }}{{ else }}{{ $alt }}{{ end }}">
+      <img srcset="{{ $sm.RelPermalink }} 700w, {{ $md.RelPermalink }} 1200w, {{ $lg.RelPermalink }} 1800w, {{ $xl.RelPermalink }} 2400w"
+           sizes="(max-width: 40rem) 100vw, (max-width: 70rem) 50vw, 33vw"
+           src="{{ $md.RelPermalink }}"
+           width="{{ $md.Width }}" height="{{ $md.Height }}"
+           alt="{{ $alt }}"
+           {{ with $ttl }}title="{{ . }}"{{ end }}
+           loading="lazy" decoding="async">
+    </a>
+    {{- /* safeHTML because captions carry <em> around foreign terms and the
+           place. The strings are authored in data/photography.yaml, not user
+           input. The same string went into data-caption above, where Hugo
+           escapes it for the attribute and the lightbox unescapes it. The
+           lightbox gets $lbcap, the same string with the date after it. */ -}}
+    {{- with $cap }}<figcaption>{{ . | safeHTML }}</figcaption>{{ end }}
+  </figure>
+  {{- end }}
+</div>
+{{- if or $credit $note }}
+<p class="gallery__credit">
+  {{- with $credit }}<span>{{ . }}</span>{{ end }}
+  {{- with $note }}
+  <a href="mailto:{{ site.Params.email }}">{{ . }}</a>
+  {{- end }}
+</p>
+{{- end }}
+
+{{- /* One dialog for the whole gallery, populated on open. <dialog> is used
+       for the focus trap, the inert background and Escape-to-close — all of
+       which the platform gives for free and which are tedious to get right
+       by hand. */ -}}
+<dialog class="lightbox" aria-label="{{ i18n "photo_viewer" }}">
+  <button type="button" class="lightbox__close" aria-label="{{ i18n "close" }}">&times;</button>
+  <button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="{{ i18n "previous_photo" }}">&#8249;</button>
+  <button type="button" class="lightbox__nav lightbox__nav--next" aria-label="{{ i18n "next_photo" }}">&#8250;</button>
+  <figure class="lightbox__figure">
+    <img class="lightbox__img" alt="" draggable="false">
+    <figcaption class="lightbox__caption" lang="{{ $lang }}"></figcaption>
+  </figure>
+</dialog>
+{{- end }}

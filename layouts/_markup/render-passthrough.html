@@ -1,0 +1,23 @@
+{{- /* Renders the math that the passthrough extension captures.
+
+       Server-side, at build time, via Hugo's own KaTeX. Nothing is loaded in
+       the browser: no script, no stylesheet, no font file, no third-party
+       request. That matters here because the rest of the site already goes to
+       some trouble to fetch nothing from anyone else.
+
+       Output is MathML rather than KaTeX's HTML. The HTML mode is prettier but
+       needs KaTeX's stylesheet and its own fonts, which would mean shipping
+       another ~300KB of woff2 for a handful of superscripts. MathML is native
+       in Chrome 109+, Safari 14.1+ and Firefox, and inherits the page's serif
+       instead of introducing another typeface.
+
+       try/.Err rather than letting it throw: a typo in one formula should name
+       itself and the file it is in, not fail the build with a stack trace. */ -}}
+{{- $opts := dict "output" "mathml" "displayMode" (eq .Type "block") -}}
+{{- with try (transform.ToMath .Inner $opts) -}}
+  {{- with .Err -}}
+    {{- errorf "math in %s: %s" $.Page.File.Filename . -}}
+  {{- else -}}
+    {{- .Value -}}
+  {{- end -}}
+{{- end -}}

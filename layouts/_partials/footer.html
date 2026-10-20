@@ -1,0 +1,8 @@
+<footer class="site-footer" role="contentinfo">
+  <p class="footer-meta">
+    <a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a>
+  </p>
+  {{- /* The site-wide notice. The year is the build's, so it moves on by
+         itself the first time the site is published in a new year. */}}
+  <p class="footer-meta">&copy;&nbsp;{{ now.Year }} Remi Seddigh</p>
+</footer>

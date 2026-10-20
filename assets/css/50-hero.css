@@ -1,0 +1,222 @@
+@layer hero {
+  /* The photograph is fixed behind the whole window and the content sits on a
+     sheet laid over it, so the picture that fills the band at the top is the
+     same picture that runs down both sides of the sheet: one image, never cut.
+     Over that, the name centred in the opening band, and a nav bar that is
+     translucent while it floats on the photograph and goes near-solid in the
+     same colour once it is over the page. */
+
+  /* ── The photograph, fixed behind everything ───────────────────────────
+     A fixed pseudo-element rather than background-attachment: fixed, which
+     iOS Safari ignores or renders janky on scroll. --page-bg is set on <body>
+     by layouts/baseof.html. */
+  body { background: var(--nav-bg); }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--page-bg, none);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* ── The title band ────────────────────────────────────────────────────
+     A box of a known height for the name to sit in, full viewport width.
+     It has no image of its own: the page background shows through it. */
+  .banner {
+    position: relative;
+    inline-size: 100%;
+    overflow: hidden;
+    block-size: var(--hero-block);
+    min-block-size: 13rem;
+  }
+  /* Sub-pages get a shallower band, but a real one: it carries the page's
+     title in place of the <h1>, so it has to be deep enough to hold it. */
+  .banner--sliver {
+    block-size: clamp(11rem, 26svh, 17rem);
+    min-block-size: 0;
+  }
+
+  .banner__hero {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 1.4rem;
+    padding-inline: var(--space-gutter);
+    padding-block-start: var(--navbar-h);
+    pointer-events: none;
+    /* A wash under the nav and a stronger one behind the name. The tilework
+       is bright turquoise, where bare white measures under 2:1. The core is
+       deliberately opaque and the falloff long, so it darkens the type
+       without drawing a visible disc on the photograph. */
+    background:
+      radial-gradient(46% 62% at 50% 58%,
+        rgb(0 0 0 / 0.62), rgb(0 0 0 / 0.30) 52%, transparent 80%),
+      linear-gradient(to bottom, rgb(0 0 0 / 0.34), transparent 30%);
+  }
+
+  .banner__name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.1rem + 3.4vw, 3.6rem);
+    line-height: 1.05;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    text-wrap: balance;
+    text-shadow: 0 2px 18px rgb(0 0 0 / 0.55), 0 1px 3px rgb(0 0 0 / 0.4);
+  }
+  .banner--sliver .banner__name {
+    font-size: clamp(1.75rem, 1rem + 2.4vw, 2.75rem);
+  }
+  .banner__rule {
+    display: block;
+    inline-size: 4.5rem;
+    block-size: 4px;
+    border-radius: 2px;
+    background: var(--nav-accent);
+    box-shadow: 0 1px 6px rgb(0 0 0 / 0.35);
+  }
+  .banner__sentinel {
+    position: absolute;
+    inset-block-end: 0;
+    inline-size: 100%;
+    block-size: 1px;
+    pointer-events: none;
+  }
+
+  /* ── The bar ───────────────────────────────────────────────────────────
+     Blue at both ends, never white: 30% over the photograph so the picture
+     reads through it, 70% once it is over the sheet.
+
+     30% is below AA. Compositing the bar over the brightest 0.5% of the
+     strip the photograph puts under it, white type measures 2.05:1 — 4.5:1
+     is the threshold. At 70% it is 6.4:1 and up.
+
+     The heavier text shadow below is the mitigation. It does not enter the
+     WCAG figure, which is computed on flat colours, but it is what actually
+     keeps the type readable against a busy photograph. */
+  @media (min-width: 40rem) {
+    .navbar {
+      position: fixed;
+      inset-block-start: 0;
+      inset-inline: 0;
+      background: var(--nav-bg-light);
+      background: color-mix(in srgb, var(--nav-bg-light) 30%, transparent);
+      box-shadow: 0 2px 14px rgb(0 0 0 / 0.22);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    /* A touch darker than the bar at rest: the same tile blue taken 15%
+       toward black before the transparency is applied, so it still reads as
+       the photograph's colour but holds the type more firmly now that it is
+       over the sheet rather than over the picture. */
+    .navbar.is-stuck {
+      background: color-mix(in srgb,
+        color-mix(in srgb, var(--nav-bg-light) 85%, #000) 70%, transparent);
+      box-shadow: 0 6px 20px rgb(0 0 0 / 0.28);
+    }
+  }
+
+  /* ── The sheet ─────────────────────────────────────────────────────────
+     Narrower than the window, so the photograph continues down both sides.
+     Flush with the band above it, so the title is never cut off from the
+     text it belongs to: square at the top, rounded at the foot. */
+  .shell {
+    background: color-mix(in srgb, var(--bg) calc(var(--sheet-alpha) * 100%), transparent);
+    max-inline-size: min(72rem, calc(100% - 2 * var(--space-gutter)));
+    margin-inline: auto;
+    margin-block-end: clamp(1.75rem, 4vw, 3rem);
+    padding-inline: clamp(1.5rem, 5vw, 4rem);
+    padding-block: clamp(1.75rem, 5vw, 3.5rem);
+    border-radius: 0 0 var(--radius) var(--radius);
+    /* Both shadows, but the tight one is pulled in by a negative spread.
+       At 0 1px 2px its blur bleeds a pixel above the top edge and draws a
+       dark hairline right where the band meets the sheet; -2px of spread
+       keeps it to the sides and foot, where it is doing the work of lifting
+       the paper off the photograph. */
+    box-shadow: 0 2px 4px -2px rgb(0 0 0 / 0.30), 0 14px 44px rgb(0 0 0 / 0.26);
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .shell { backdrop-filter: blur(var(--sheet-blur)) saturate(1.04); }
+  }
+  /* The sheet is a fixed 72rem, but the text is only as wide as it wants to
+     be, so without this the whole difference piles up on the inline-end and
+     the column sits off-centre inside its own page. Centring .main rather
+     than .prose keeps the heading and the lede in step with the body. */
+  .main { max-inline-size: var(--measure); margin-inline: auto; }
+  /* The gallery is not prose and must not be held to a measure: capping it
+     there would cost it two of its three columns. It keeps its own 62rem. */
+  .main:has(.gallery) { max-inline-size: 62rem; }
+  /* The home page carries a portrait and the blurb side by side, so it
+     wants more room than a column of text does. */
+  body[data-hub] .main { max-inline-size: 54rem; }
+  /* The CV viewer is a document, not running text. At a reading measure the
+     embedded page renders too small to read. */
+  .main:has(.pdfview) { max-inline-size: 58rem; }
+  /* Every page, not only the ones with figures. At one measure the sheet was
+     1152px with a 515px column centred in it, so roughly 320px of nothing
+     down each side. This is the width the research page has always had. */
+  @media (min-width: 66rem) {
+    .main { max-inline-size: calc(var(--measure) + 22rem); }
+  }
+
+  /* The band is standing in for the heading on every page, so the one in
+     the document flow is hidden — visually only; it stays for screen readers
+     and for the document outline, and the band itself is aria-hidden. */
+  .page-head h1 {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  /* With the heading gone the head is an empty box. Collapsed entirely
+     unless it still holds a lede, which the home page does. */
+  .page-head:not(:has(.lede)) { margin-block-end: 0; }
+  /* And the first section heading does not need a section's worth of space
+     above it when there is nothing above it. */
+  .prose > h2:first-child { margin-block-start: 0; }
+
+  /* A rule under each section heading, in the same lapis as the heading but
+     thinned right down so it reads as an underline rather than a divider.
+     .lede is the home page's tagline, set as a section heading. It lives in
+     .page-head, outside .prose, so it needs naming separately here. */
+  .prose h2,
+  .lede {
+    border-block-end: 1px solid color-mix(in srgb, var(--heading) 35%, transparent);
+    padding-block-end: 0.35em;
+  }
+
+  /* Each section starts below any diagram still floating beside the one
+     before it. */
+  .prose h2 { clear: both; }
+
+  .navbar .brand { font-weight: 600; letter-spacing: 0.01em; }
+  /* The bar is translucent in both states, so the type carries its own
+     contrast. Two shadows: a tight one for edge definition against fine tile
+     detail, and a wide soft one that darkens the whole area behind each
+     glyph. */
+  .navbar .brand,
+  .navbar .nav a,
+  .navbar .lang-switch a {
+    text-shadow: 0 1px 2px rgb(0 0 0 / 0.85), 0 0 12px rgb(0 0 0 / 0.65);
+  }
+
+  /* Phones: the bar sits at the foot of the window (40-components.css). The
+     sheet goes edge to edge, with a sliver of photograph above it. */
+  @media (max-width: 40rem) {
+    .shell {
+      max-inline-size: 100%;
+      margin-inline: 0;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      border-radius: 0;
+      min-block-size: calc(100svh - var(--hero-block));
+      padding-block-end: calc(var(--navbar-h-mobile) + 1.5rem);
+    }
+  }
+}

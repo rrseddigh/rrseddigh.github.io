@@ -1,0 +1,27 @@
+{{- /* Publish every font, preload the two above the fold.
+
+       Hugo publishes an asset when something calls .RelPermalink on it — it
+       does not parse url() out of CSS. So a face referenced only from
+       fonts.css never reaches public/ and 404s at runtime, which is silent:
+       the browser just falls back down the stack.
+
+       The range below is the publish list. Keep it in step with the
+       @font-face rules in assets/css/fonts.css. */ -}}
+{{- $all := slice
+      "fonts/source-serif-4.woff2"
+      "fonts/source-serif-4-italic.woff2"
+      "fonts/inter.woff2" -}}
+{{- range $all }}
+  {{- with resources.Get . }}
+    {{- /* Assigned, not emitted — touching .RelPermalink is what publishes it. */ -}}
+    {{- $_ := .RelPermalink -}}
+  {{- else }}{{ errorf "missing font asset: %s" . }}{{ end -}}
+{{- end -}}
+
+{{- /* `crossorigin` is REQUIRED even same-origin — omitting it makes the
+       browser fetch the font twice. */ -}}
+{{- range slice "fonts/source-serif-4.woff2" "fonts/inter.woff2" }}
+  {{- with resources.Get . }}
+<link rel="preload" as="font" type="font/woff2" href="{{ .RelPermalink }}" crossorigin>
+  {{- end }}
+{{- end }}

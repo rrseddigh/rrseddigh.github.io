@@ -1,0 +1,11 @@
+{{- /* Driven entirely off .AllTranslations so the set is automatically
+       reciprocal and self-referential. Never hand-write hreflang. */ -}}
+{{- if gt (len .AllTranslations) 1 -}}
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Name }}" href="{{ .Permalink }}">
+{{- end }}
+{{- range .AllTranslations }}{{ if .Language.IsDefault }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+{{- end }}{{ end }}
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}">

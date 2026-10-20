@@ -1,0 +1,664 @@
+# Photography gallery metadata, keyed by the image's base filename.
+#
+#   alt     — what a screen reader announces: a brief description, then where.
+#   caption — the visible line under the frame: what the picture is of. No
+#             full stop at the end. May contain <em>; rendered with safeHTML.
+#             Foreign common nouns are italicised, as they normally are.
+#   place   — "<Town>, <Country>", set after the caption in italics. The
+#             template puts the full stop between the two, so neither field
+#             carries one. Leave it out and the caption stands alone.
+#   title   — short line shown as the browser tooltip on hover,
+#             "<Subject>. <Place>" or "<Place>, <Town>".
+#
+# A frame with no entry here still appears in the gallery, with no caption.
+#
+# French uses the French exonyms where they exist (le Cervin for the
+# Matterhorn, le Léman for Lake Geneva) rather than transliterating the English.
+#
+# `credit` is rendered once at the foot of the gallery, not on every frame.
+
+credit: "© Remi Seddigh"
+
+# Rendered after the credit, as a mailto link to params.email.
+credit_note:
+  en: "Please get in touch if you would like to use one of these pictures."
+  fr: "Contactez-moi si vous souhaitez utiliser une de ces photos."
+
+photos:
+  paisley-termeh:
+    alt:
+      en: "Densely embroidered termeh, boteh-jegheh in gold, red and green."
+      fr: "Termeh richement brodé, boteh-jegheh d’or, de rouge et de vert."
+    caption:
+      en: "<em>Termeh</em> fabric, with gold and red <em>boteh-jegheh</em> shapes."
+      fr: "<em>Termeh</em>, <em>boteh-jegheh</em> en or et en rouge."
+    title: { en: "Termeh", fr: "Termeh" }
+
+  bazaar-sweets:
+    alt:
+      en: "Open paper sacks of colored hard candy and noql behind a confectioner's window."
+      fr: "Des sacs de papier ouverts, bonbons colorés et noql, à la vitrine d’un confiseur."
+    caption:
+      en: "Hard candy and <em>noql</em> in a confectioner's window."
+      fr: "Bonbons et <em>noql</em> à la vitrine d’un confiseur."
+    title: { en: "Confectioner's window", fr: "Confiserie" }
+
+  tram-at-dusk:
+    alt:
+      en: "A yellow tram on the Danube embankment at sunset, in front of the Chain Bridge and Castle Hill. Budapest, Hungary."
+      fr: "Un tramway jaune sur les quais du Danube au couchant, devant le pont des Chaînes et la colline du château. Budapest, Hongrie."
+    caption:
+      en: "A tram on the Danube embankment at sunset"
+      fr: "Un tramway sur les quais du Danube au coucher du soleil"
+    place:
+      en: "Budapest, Hungary"
+      fr: "Budapest, Hongrie"
+    title: { en: "Tram at sunset. Budapest", fr: "Tramway au couchant. Budapest" }
+
+  steppe-road:
+    alt:
+      en: "An empty road running to the horizon across open plain."
+      fr: "Une route déserte filant vers l’horizon dans la plaine."
+    caption:
+      en: "An empty road running across an open plain."
+      fr: "Une route déserte à travers la plaine."
+    title: { en: "Empty road", fr: "Route déserte" }
+
+  blue-tilework:
+    alt:
+      en: "Haft-rang tilework: a lapis and saffron medallion on a cerulean field, with floral vine borders."
+      fr: "Carreaux haft-rang : médaillon lapis et safran sur champ céruléen, bordures de rinceaux."
+    caption:
+      en: "<em>Haft-rang</em> (seven-color) tilework, with a dark blue and saffron medallion."
+      fr: "Carreaux <em>haft-rang</em> (sept-couleurs), avec un médaillon en bleu foncé et en safran."
+    title: { en: "Haft-rang tilework", fr: "Carreaux haft-rang" }
+
+  stained-glass-on-stone:
+    alt:
+      en: "Stained-glass light thrown across a rough stone floor in red, teal, blue and gold."
+      fr: "Lumière de vitrail projetée sur un sol de pierre brute : rouge, sarcelle, bleu et or."
+    caption:
+      en: "Stained-glass light on a stone floor."
+      fr: "Lumière de vitrail sur un sol de pierre."
+    title: { en: "Stained glass", fr: "Vitrail" }
+
+  lake-shore:
+    alt:
+      en: "A rocky breakwater on calm water, one sailboat offshore, mountains across the lake. Saint-Sulpice on Lake Geneva, near Lausanne, Switzerland."
+      fr: "Un brise-lames rocheux sur l’eau calme, un voilier au large, les montagnes en face. Saint-Sulpice, lac Léman, près de Lausanne, Suisse."
+    caption:
+      en: "A breakwater and a single sailboat on Lake Geneva"
+      fr: "Un brise-lames et un bateau solitaire sur le lac Léman"
+    place:
+      en: "Saint-Sulpice, near Lausanne, Switzerland"
+      fr: "Saint-Sulpice, près de Lausanne, Suisse"
+    title: { en: "Lake Geneva, Saint-Sulpice", fr: "Le Léman, Saint-Sulpice" }
+
+  lake-moorings:
+    alt:
+      en: "Moored boats in a narrow inlet, trees on the bank and a mountain range beyond. Saint-Sulpice on Lake Geneva, near Lausanne, Switzerland."
+      fr: "Des bateaux amarrés dans une crique étroite, des arbres sur la rive, une chaîne de montagnes au-delà. Saint-Sulpice, lac Léman, près de Lausanne, Suisse."
+    caption:
+      en: "Moorings on Lake Geneva"
+      fr: "Amarrages sur le lac Léman"
+    place:
+      en: "Saint-Sulpice, near Lausanne, Switzerland"
+      fr: "Saint-Sulpice, près de Lausanne, Suisse"
+    title: { en: "Moorings. Saint-Sulpice", fr: "Amarrages. Saint-Sulpice" }
+
+  monastiraki-platform:
+    alt:
+      en: "One passenger on a bench on an otherwise empty metro platform, under a sign reading ΜΟΝΑΣΤΗΡΙΟΝ. Athens, Greece."
+      fr: "Un seul voyageur sur un banc, quai de métro désert, sous un panneau ΜΟΝΑΣΤΗΡΙΟΝ. Athènes, Grèce."
+    caption:
+      en: "A lone passenger on the metro platform"
+      fr: "Un voyageur seul sur le quai du métro"
+    place:
+      en: "Monastiraki, Athens, Greece"
+      fr: "Monastiraki, Athènes, Grèce"
+    title: { en: "Monastiraki, Athens", fr: "Monastiraki, Athènes" }
+
+  alpine-slope:
+    alt:
+      en: "Wooden chalets scattered on a steep green slope, with the Matterhorn rising into cloud behind. Above Zermatt, Switzerland."
+      fr: "Des chalets de bois éparpillés sur une pente verte et raide, le Cervin s’élevant dans les nuages. Au-dessus de Zermatt, en Suisse."
+    caption:
+      en: "Chalets below the Matterhorn"
+      fr: "Des chalets sous le Cervin"
+    place:
+      en: "Above Zermatt, Switzerland"
+      fr: "Au-dessus de Zermatt, Suisse"
+    title: { en: "The Matterhorn, Zermatt", fr: "Le Cervin, Zermatt" }
+
+  lakeside-flowers:
+    alt:
+      en: "White, yellow and dark red wildflowers in the foreground, the lake and low hills behind. Quai d'Ouchy, Lausanne, on Lake Geneva, Switzerland."
+      fr: "Des fleurs sauvages blanches, jaunes et rouge sombre au premier plan, le lac et les collines derrière. Quai d’Ouchy, Lausanne, lac Léman, Suisse."
+    caption:
+      en: "Wildflowers on a Lake Geneva embankment"
+      fr: "Fleurs sauvages sur un quai du lac Léman"
+    place:
+      en: "Quai d'Ouchy, Lausanne, Switzerland"
+      fr: "Quai d’Ouchy, Lausanne, Suisse"
+    title: { en: "Quai d'Ouchy, Lausanne", fr: "Quai d’Ouchy, Lausanne" }
+
+  green-tiles:
+    alt:
+      en: "A metal intercom panel set into a wall of glossy green tile. Porto, Portugal."
+      fr: "Un interphone métallique encastré dans un mur de faïence verte brillante. Porto, au Portugal."
+    caption:
+      en: "An intercom set into a wall of green tile"
+      fr: "Un interphone dans un mur de carreaux verts"
+    place:
+      en: "Porto, Portugal"
+      fr: "Porto, Portugal"
+    title: { en: "Green tile. Porto", fr: "Faïence verte. Porto" }
+
+  harbor:
+    alt:
+      en: "Small boats on shallow water at low tide, a low town along the far shore. The mouth of the Douro, Porto, Portugal."
+      fr: "De petites barques sur l’eau basse à marée descendante, une ville étalée sur la rive d’en face. L’embouchure du Douro, Porto, au Portugal."
+    caption:
+      en: "Small boats at low tide at the mouth of the Douro river"
+      fr: "De petites barques à marée basse à l’embouchure du fleuve Douro"
+    place:
+      en: "Porto, Portugal"
+      fr: "Porto, Portugal"
+    title: { en: "Mouth of the Douro, Porto", fr: "Embouchure du Douro, Porto" }
+
+  river-city:
+    alt:
+      en: "A dense hillside city of terracotta roofs above a wide river, boats moored along the quay. Porto seen from Vila Nova de Gaia, Portugal."
+      fr: "Une ville dense à flanc de colline, toits de tuiles au-dessus d’un large fleuve, des barques le long du quai. Porto vue de Vila Nova de Gaia, au Portugal."
+    caption:
+      en: "Porto's terracotta roofs above the Douro river"
+      fr: "Les toits de Porto au-dessus du fleuve Douro"
+    place:
+      en: "From Vila Nova de Gaia, Portugal"
+      fr: "Depuis Vila Nova de Gaia, Portugal"
+    title: { en: "Porto from Vila Nova de Gaia", fr: "Porto depuis Vila Nova de Gaia" }
+
+  nyc-skyscrapers:
+    alt:
+      en: "Looking straight up a canyon of glass towers, their tops lost in low cloud. New York, United States."
+      fr: "Vue en contre-plongée sur des tours de verre dont les sommets se perdent dans les nuages. New York, États-Unis."
+    caption:
+      en: "Skyscrapers lost in low fog"
+      fr: "Des gratte-ciels perdus dans la brume"
+    place:
+      en: "New York, United States"
+      fr: "New York, États-Unis"
+    title: { en: "Skyscrapers in cloud. New York", fr: "Gratte-ciel dans les nuages. New York" }
+
+  aurora-davis:
+    alt:
+      en: "A magenta aurora filling the night sky above a dark treeline, seen during a geomagnetic storm. Davis, California, United States."
+      fr: "Une aurore magenta emplissant le ciel nocturne au-dessus d’une ligne d’arbres sombre, pendant une tempête géomagnétique. Davis, Californie, États-Unis."
+    caption:
+      en: "The aurora borealis during a geomagnetic storm"
+      fr: "L’aurore boréale pendant une tempête géomagnétique"
+    place:
+      en: "Davis, California, United States"
+      fr: "Davis, Californie, États-Unis"
+    title: { en: "Aurora borealis. Davis", fr: "Aurore boréale. Davis" }
+
+  lucerne-bridge:
+    alt:
+      en: "A covered wooden bridge with an octagonal stone water tower crossing the river, in front of the old town. Lucerne, Switzerland."
+      fr: "Un pont de bois couvert et sa tour d’eau octogonale enjambant la rivière, devant la vieille ville. Lucerne, Suisse."
+    caption:
+      en: "The Kapellbrücke with its water tower"
+      fr: "Le pont de la Chapelle avec sa tour d’eau"
+    place:
+      en: "Lucerne, Switzerland"
+      fr: "Lucerne, Suisse"
+    title: { en: "Kapellbrücke, Lucerne", fr: "Pont de la Chapelle, Lucerne" }
+
+  rooftop-coffee:
+    alt:
+      en: "A painted tray holding coffee and a glass of pomegranate juice, set on a patterned rug on a rooftop."
+      fr: "Un plateau peint portant un café et un verre de jus de grenade, posé sur un tapis à motifs, sur un toit."
+    caption:
+      en: "Coffee and pomegranate juice."
+      fr: "Café et jus de grenade."
+    title: { en: "Rooftop coffee", fr: "Café sur un toit" }
+
+  atashkadeh:
+    alt:
+      en: "The vaulted stone chamber of a ruined fire temple, light falling through an arched opening."
+      fr: "La salle voûtée de pierre d’un temple du feu en ruine, la lumière tombant par une ouverture en arc."
+    caption:
+      en: "Interior of a Sasanian <em>atashkadeh</em>, or fire temple."
+      fr: "L'intérieur d'un <em>atashkadeh</em> sassanide, un temple du feu."
+    title: { en: "Sasanian fire temple", fr: "Temple du feu sassanide" }
+
+  morcote:
+    alt:
+      en: "A cypress-lined stone path descending toward a lake ringed by wooded mountains. Morcote on Lago di Lugano, Switzerland."
+      fr: "Un chemin de pierre bordé de cyprès descendant vers un lac cerné de montagnes boisées. Morcote, lac de Lugano, Suisse."
+    caption:
+      en: "A cypress-lined path down to the lakeside village"
+      fr: "Un chemin de cyprès vers le village sur le lac"
+    place:
+      en: "Morcote, Lago di Lugano, Switzerland"
+      fr: "Morcote, lac de Lugano, Suisse"
+    title: { en: "Morcote, Lago di Lugano", fr: "Morcote, lac de Lugano" }
+
+  pomegranate:
+    alt:
+      en: "A single ripe pomegranate hanging among leaves and red blossom."
+      fr: "Une grenade mûre suspendue parmi les feuilles et les fleurs rouges."
+    caption:
+      en: "A ripe pomegranate on the tree."
+      fr: "Une grenade mûre sur l’arbre."
+    title: { en: "Pomegranate", fr: "Grenade" }
+
+  florence-duomo:
+    alt:
+      en: "The dome of the Duomo and the tower of the Palazzo Vecchio above the rooftops, seen from the Boboli Gardens. Florence, Italy."
+      fr: "Le dôme du Duomo et la tour du Palazzo Vecchio au-dessus des toits, depuis les jardins de Boboli. Florence, Italie."
+    caption:
+      en: "The Duomo from the Boboli Gardens"
+      fr: "Le Duomo depuis les jardins de Boboli"
+    place:
+      en: "Florence, Italy"
+      fr: "Florence, Italie"
+    title: { en: "The Duomo, Florence", fr: "Le Duomo, Florence" }
+
+  colosseum-moon:
+    alt:
+      en: "The tiered arches of the Colosseum against a clear blue sky, a thin crescent moon above and a single bird flying to the right. Rome, Italy."
+      fr: "Les arcades étagées du Colisée sur un ciel bleu, un mince croissant de lune au-dessus et un oiseau seul volant vers la droite. Rome, Italie."
+    caption:
+      en: "A bird flying to the right over the Colosseum, a good augury"
+      fr: "Un oiseau volant vers la droite au-dessus du Colisée, un bon augure"
+    place:
+      en: "Rome, Italy"
+      fr: "Rome, Italie"
+    title: { en: "A good augury. Rome", fr: "Un bon augure. Rome" }
+
+  space-needle-glass:
+    alt:
+      en: "A blown-glass sculpture like a spray of fern fronds, the Space Needle rising behind it into the sun. Seattle, United States."
+      fr: "Une sculpture de verre soufflé en forme de frondes de fougère, la Space Needle s’élevant derrière, à contre-jour. Seattle, États-Unis."
+    caption:
+      en: "Blown glass sculpture at the foot of the Space Needle"
+      fr: "Sculpture de verre soufflé au pied de la Space Needle"
+    place:
+      en: "Seattle, United States"
+      fr: "Seattle, États-Unis"
+    title: { en: "Glass fern. Seattle", fr: "Fougère de verre. Seattle" }
+
+  yellowstone-gorge:
+    alt:
+      en: "A pale rhyolite gorge with a river running through it and steam rising from hot springs on the bank. Yellowstone, United States."
+      fr: "Une gorge de rhyolite claire traversée par une rivière, la vapeur montant des sources chaudes sur la rive. Yellowstone, États-Unis."
+    caption:
+      en: "Leftover snow above a river gorge"
+      fr: "Neige restante au-dessus d'une rivière"
+    place:
+      en: "Yellowstone, United States"
+      fr: "Yellowstone, États-Unis"
+    title: { en: "River gorge. Yellowstone", fr: "Gorge de la rivière. Yellowstone" }
+
+  amsterdam-canal:
+    alt:
+      en: "A canal at night, lamplit facades and a bridge reflected in still black water, flowers in the foreground. Amsterdam, Netherlands."
+      fr: "Un canal la nuit, façades et pont éclairés se reflétant dans l’eau noire et immobile, des fleurs au premier plan. Amsterdam, Pays-Bas."
+    caption:
+      en: "A canal and houses at night"
+      fr: "Un canal et des maisons la nuit"
+    place:
+      en: "Amsterdam, Netherlands"
+      fr: "Amsterdam, Pays-Bas"
+    title: { en: "Canal at night. Amsterdam", fr: "Canal la nuit. Amsterdam" }
+
+  caffe-trieste:
+    alt:
+      en: "A man reading a newspaper, multiplied in the chrome of an espresso machine among bottles and photographs. Caffè Trieste, San Francisco, United States."
+      fr: "Un homme lisant le journal, démultiplié dans le chrome d’une machine à espresso, parmi les bouteilles et les photographies. Caffè Trieste, San Francisco, États-Unis."
+    caption:
+      en: "Reflections in an espresso machine"
+      fr: "Reflets dans une machine à espresso"
+    place:
+      en: "Caffè Trieste, San Francisco, United States"
+      fr: "Caffè Trieste, San Francisco, États-Unis"
+    title: { en: "Caffè Trieste, San Francisco", fr: "Caffè Trieste, San Francisco" }
+
+  miramare-window:
+    alt:
+      en: "A dark paneled room opening onto a bright window, the sea beyond. Castello di Miramare, Trieste, Italy."
+      fr: "Une pièce sombre lambrissée s’ouvrant sur une fenêtre lumineuse, la mer au-delà. Château de Miramare, Trieste, Italie."
+    caption:
+      en: "A window out onto the Adriatic"
+      fr: "Une fenêtre sur l’Adriatique"
+    place:
+      en: "Castello di Miramare, Trieste, Italy"
+      fr: "Château de Miramare, Trieste, Italie"
+    title: { en: "Miramare, Trieste", fr: "Miramare, Trieste" }
+
+  trieste-canal:
+    alt:
+      en: "A canal running between tall facades, the sky burning orange at sunset. Trieste, Italy."
+      fr: "Un canal entre de hautes façades, le ciel embrasé d’orange au couchant. Trieste, Italie."
+    caption:
+      en: "The canal and some boats at sunset"
+      fr: "Le canal et quelques barques au coucher du soleil"
+    place:
+      en: "Trieste, Italy"
+      fr: "Trieste, Italie"
+    title: { en: "Canal at sunset. Trieste", fr: "Canal au couchant. Trieste" }
+
+  tahoe-rocks:
+    alt:
+      en: "Boulders under clear shallow water and a lone pine, seen through a circular fisheye. Lake Tahoe, United States."
+      fr: "Des rochers sous une eau claire et peu profonde et un pin solitaire, vus dans un fisheye circulaire. Lac Tahoe, États-Unis."
+    caption:
+      en: "Rocks under clear water, behind a young pine tree"
+      fr: "Des rochers sous l’eau claire, derrière un jeune pin"
+    place:
+      en: "Lake Tahoe, United States"
+      fr: "Lac Tahoe, États-Unis"
+    title: { en: "Lake Tahoe", fr: "Lac Tahoe" }
+
+  aegina-cat:
+    alt:
+      en: "A calico cat asleep in a basket outside a shop hung with woven bags and scarves. Aegina, Greece."
+      fr: "Un chat calico endormi dans un panier devant une boutique tendue de sacs tressés et de foulards. Égine, Grèce."
+    caption:
+      en: "A cat asleep outside a shop"
+      fr: "Un chat endormi devant une boutique"
+    place:
+      en: "Aegina, Greece"
+      fr: "Égine, Grèce"
+    title: { en: "Sleeping cat. Aegina", fr: "Chat endormi. Égine" }
+
+  aare-swimmer:
+    alt:
+      en: "A single swimmer far out in wide green-gray water. The Aare at Bern, Switzerland."
+      fr: "Un nageur solitaire au loin dans une eau vert-gris. L’Aare à Berne, Suisse."
+    caption:
+      en: "A lone swimmer in the Aare, commuting back from work"
+      fr: "Un nageur solitaire dans l’Aare, rentrant du travail"
+    place:
+      en: "Bern, Switzerland"
+      fr: "Berne, Suisse"
+    title: { en: "Swimmer in the Aare. Bern", fr: "Nageur dans l’Aare. Berne" }
+
+  strasbourg-cathedral:
+    alt:
+      en: "The west front of a Gothic cathedral in pink sandstone, dense with tracery and statuary. Strasbourg, France."
+      fr: "La façade occidentale d’une cathédrale gothique en grès rose, dense de remplages et de statues. Strasbourg, France."
+    caption:
+      en: "Face of the Strasbourg cathedral at sunset"
+      fr: "Façade de la cathédrale de Strasbourg au coucher du soleil"
+    place:
+      en: "Strasbourg, France"
+      fr: "Strasbourg, France"
+    title: { en: "Cathedral front. Strasbourg", fr: "Façade de la cathédrale. Strasbourg" }
+
+  riomaggiore:
+    alt:
+      en: "Tall houses in ochre, rose and red stacked steeply above a small harbor. Riomaggiore, Cinque Terre, Italy."
+      fr: "De hautes maisons ocre, roses et rouges empilées au-dessus d’un petit port. Riomaggiore, Cinque Terre, Italie."
+    caption:
+      en: "Houses stacked above the harbor"
+      fr: "Des maisons empilées au-dessus du port"
+    place:
+      en: "Riomaggiore, Cinque Terre, Italy"
+      fr: "Riomaggiore, Cinque Terre, Italie"
+    title: { en: "Riomaggiore, Cinque Terre", fr: "Riomaggiore, Cinque Terre" }
+
+  porto-rooftops:
+    alt:
+      en: "Terracotta roofs and painted facades seen steeply from above, the river beyond. Porto, Portugal."
+      fr: "Toits de tuiles et façades peintes vus d’en haut, le fleuve au-delà. Porto, Portugal."
+    caption:
+      en: "Rooftops and houses from the Dom Luís Bridge"
+      fr: "Toits et maisons vus du pont Dom Luís"
+    place:
+      en: "Porto, Portugal"
+      fr: "Porto, Portugal"
+    title: { en: "Rooftops. Porto", fr: "Les toits. Porto" }
+
+  corniglia-window:
+    alt:
+      en: "A dark stone passage opening onto a rectangle of bright blue sea. Corniglia, Cinque Terre, Italy."
+      fr: "Un passage de pierre sombre s’ouvrant sur un rectangle de mer d’un bleu vif. Corniglia, Cinque Terre, Italie."
+    caption:
+      en: "A window onto the Ligurian Sea"
+      fr: "Une fenêtre sur la mer Ligure"
+    place:
+      en: "Corniglia, Cinque Terre, Italy"
+      fr: "Corniglia, Cinque Terre, Italie"
+    title: { en: "Corniglia, Cinque Terre", fr: "Corniglia, Cinque Terre" }
+
+  # Vienna, Budapest and Warsaw, August 2026.
+
+  cafe-sperl-window:
+    alt:
+      en: "Looking out through the tall window of a Viennese coffeehouse, brass lamps lit, a couple at a marble table, passers-by outside. Café Sperl, Vienna, Austria."
+      fr: "Vue à travers la haute fenêtre d’un café viennois, lampes de laiton allumées, un couple à une table de marbre, des passants dehors. Café Sperl, Vienne, Autriche."
+    caption:
+      en: "A couple drinking coffee in a classic Viennese coffeehouse"
+      fr: "Un couple prenant le café dans un café classique viennois"
+    place:
+      en: "Café Sperl, Vienna, Austria"
+      fr: "Café Sperl, Vienne, Autriche"
+    title: { en: "Café Sperl, Vienna", fr: "Café Sperl, Vienne" }
+
+  belvedere-window:
+    alt:
+      en: "The formal gardens and the Lower Belvedere seen through a six-paned window, the spire of St. Stephen's Cathedral on the skyline. Upper Belvedere, Vienna, Austria."
+      fr: "Les jardins à la française et le Belvédère inférieur vus à travers une fenêtre à six carreaux, la flèche de la cathédrale Saint-Étienne à l’horizon. Belvédère supérieur, Vienne, Autriche."
+    caption:
+      en: "Vienna through a window of the Upper Belvedere"
+      fr: "Vienne par une fenêtre du Belvédère supérieur"
+    place:
+      en: "Vienna, Austria"
+      fr: "Vienne, Autriche"
+    title: { en: "Upper Belvedere, Vienna", fr: "Belvédère supérieur, Vienne" }
+
+  belvedere-statue:
+    alt:
+      en: "A medieval painted wooden statue of a bearded saint in a tall hat, one hand raised palm outward, lit against a dark wall. Upper Belvedere, Vienna, Austria."
+      fr: "Statue médiévale en bois peint d’un saint barbu coiffé d’un haut bonnet, une main levée paume ouverte, éclairée sur un mur sombre. Belvédère supérieur, Vienne, Autriche."
+    caption:
+      en: "Saying no thank you when the host comes around with pastries"
+      fr: "Dire non merci quand l’hôte arrive avec les pâtisseries"
+    place:
+      en: "Upper Belvedere, Vienna, Austria"
+      fr: "Belvédère supérieur, Vienne, Autriche"
+    title: { en: "No thank you. Upper Belvedere, Vienna", fr: "Non merci. Belvédère supérieur, Vienne" }
+
+  stephansdom-sky:
+    alt:
+      en: "Wisps of cloud in a deep blue sky, the stone flank of St. Stephen's Cathedral at the right edge. Vienna, Austria."
+      fr: "Des traînées de nuages dans un ciel bleu profond, le flanc de pierre de la cathédrale Saint-Étienne au bord droit. Vienne, Autriche."
+    caption:
+      en: "Blue sky and the Stephansdom"
+      fr: "Ciel bleu et la cathédrale Saint-Étienne"
+    place:
+      en: "Vienna, Austria"
+      fr: "Vienne, Autriche"
+    title: { en: "Stephansdom, Vienna", fr: "Saint-Étienne, Vienne" }
+
+  danube-moon-lamppost:
+    alt:
+      en: "A lamppost in silhouette against a sunset sky grading from blue to orange, a half moon beside it, the Danube below. Budapest, Hungary."
+      fr: "Un lampadaire en silhouette sur un ciel de couchant passant du bleu à l’orange, une demi-lune à côté, le Danube en contrebas. Budapest, Hongrie."
+    caption:
+      en: "The moon and a lamppost over the Danube at sunset"
+      fr: "La lune et un lampadaire au-dessus du Danube au coucher du soleil"
+    place:
+      en: "Budapest, Hungary"
+      fr: "Budapest, Hongrie"
+    title: { en: "Moon over the Danube, Budapest", fr: "Lune sur le Danube, Budapest" }
+
+  basilica-saints:
+    alt:
+      en: "Statues of saints along the balustrade of a green copper dome, seen from above, a street with a yellow car far below. St. Stephen's Basilica, Budapest, Hungary."
+      fr: "Des statues de saints le long de la balustrade d’un dôme de cuivre vert, vues d’en haut, une rue avec une voiture jaune tout en bas. Basilique Saint-Étienne, Budapest, Hongrie."
+    caption:
+      en: "The saints above St. Stephen's Basilica showing cars the way"
+      fr: "Les saints de la basilique Saint-Étienne montrent le chemin aux voitures"
+    place:
+      en: "Budapest, Hungary"
+      fr: "Budapest, Hongrie"
+    title: { en: "The saints, St. Stephen's Basilica", fr: "Les saints, basilique Saint-Étienne" }
+
+  basilica-rooftop-bar:
+    alt:
+      en: "A rooftop bar with umbrellas and a glass pavilion, seen from the dome of the basilica past its clock tower. St. Stephen's Basilica, Budapest, Hungary."
+      fr: "Un bar sur un toit, parasols et pavillon de verre, vu depuis le dôme de la basilique derrière sa tour de l’horloge. Basilique Saint-Étienne, Budapest, Hongrie."
+    caption:
+      en: "A rooftop bar, seen from the dome of St. Stephen's Basilica"
+      fr: "Un bar sur un toit, vu du dôme de la basilique Saint-Étienne"
+    place:
+      en: "Budapest, Hungary"
+      fr: "Budapest, Hongrie"
+    title: { en: "From the dome, Budapest", fr: "Depuis le dôme, Budapest" }
+
+  matthias-church:
+    alt:
+      en: "The spires and patterned glazed roof tiles of a Gothic church, seen from below against a cloudy sky. Matthias Church, Buda Castle Hill, Budapest, Hungary."
+      fr: "Les flèches et les tuiles vernissées à motifs d’une église gothique, vues d’en bas sur un ciel nuageux. Église Matthias, colline du château de Buda, Budapest, Hongrie."
+    caption:
+      en: "The spires of Matthias Church, by the Fisherman's Bastion"
+      fr: "Les flèches de l’église Matthias, près du bastion des Pêcheurs"
+    place:
+      en: "Budapest, Hungary"
+      fr: "Budapest, Hongrie"
+    title: { en: "Matthias Church, Budapest", fr: "Église Matthias, Budapest" }
+
+  parliament-from-bastion:
+    alt:
+      en: "The neo-Gothic Hungarian Parliament on the far bank of the Danube, seen from the Buda side in evening light. Budapest, Hungary."
+      fr: "Le Parlement hongrois néogothique sur l’autre rive du Danube, vu du côté de Buda dans la lumière du soir. Budapest, Hongrie."
+    caption:
+      en: "The <em>Országház</em>, the Hungarian parliament, seen from the Fisherman's Bastion"
+      fr: "L’<em>Országház</em>, le parlement hongrois, vu depuis le bastion des Pêcheurs"
+    place:
+      en: "Budapest, Hungary"
+      fr: "Budapest, Hongrie"
+    title: { en: "Parliament from the Fisherman's Bastion", fr: "Le Parlement depuis le bastion des Pêcheurs" }
+
+  krakow-ivy-wall:
+    alt:
+      en: "Ivy climbing a weathered ochre wall around a drainpipe, string lights across it, and a blue enamel street sign reading ulica Stolarska 7. Old Town, Kraków, Poland."
+      fr: "Du lierre grimpant sur un mur ocre décrépi autour d’une gouttière, une guirlande d’ampoules devant, et une plaque de rue émaillée bleue, ulica Stolarska 7. Vieille ville, Cracovie, Pologne."
+    caption:
+      en: "A vine-covered wall on ulica Stolarska"
+      fr: "Un mur couvert de lierre, ulica Stolarska"
+    place:
+      en: "Kraków, Poland"
+      fr: "Cracovie, Pologne"
+    title: { en: "Ulica Stolarska, Kraków", fr: "Ulica Stolarska, Cracovie" }
+
+  market-hall-shopper:
+    alt:
+      en: "A woman seen from behind choosing from crates of yellow, red and green peppers, handwritten price tags above them. Great Market Hall, Budapest, Hungary."
+      fr: "Une femme vue de dos choisissant parmi des cageots de poivrons jaunes, rouges et verts, étiquettes de prix manuscrites au-dessus. Grandes Halles, Budapest, Hongrie."
+    caption:
+      en: "Choosing peppers in the Great Market Hall"
+      fr: "Le choix des poivrons aux Grandes Halles"
+    place:
+      en: "Budapest, Hungary"
+      fr: "Budapest, Hongrie"
+    title: { en: "Market Hall, Budapest", fr: "Les Halles, Budapest" }
+
+  barbican-pigeon:
+    alt:
+      en: "A pigeon perched in a narrow brick window opening, green trees beyond. The Barbican, Warsaw, Poland."
+      fr: "Un pigeon perché dans une étroite ouverture de brique, des arbres verts au-delà. La barbacane, Varsovie, Pologne."
+    caption:
+      en: "A pigeon in a window of the Barbican"
+      fr: "Un pigeon à une fenêtre de la barbacane"
+    place:
+      en: "Warsaw, Poland"
+      fr: "Varsovie, Pologne"
+    title: { en: "Barbican, Warsaw", fr: "Barbacane, Varsovie" }
+
+  striped-wall-window:
+    alt:
+      en: "A small window in a wall painted with green and ochre stripes, beside a wall of green and white triangles, a brick wall in front. Old Town, Warsaw, Poland."
+      fr: "Une petite fenêtre dans un mur peint de rayures vertes et ocre, à côté d’un mur de triangles verts et blancs, un mur de brique devant. Vieille ville, Varsovie, Pologne."
+    caption:
+      en: "A window in a striped wall"
+      fr: "Une fenêtre dans un mur rayé"
+    place:
+      en: "Warsaw, Poland"
+      fr: "Varsovie, Pologne"
+    title: { en: "Striped wall, Warsaw", fr: "Mur rayé, Varsovie" }
+
+  pigeons-on-yellow-wall:
+    alt:
+      en: "Two pigeons nestled on a ledge of a yellow wall, above a green copper roof and a railing. Warsaw, Poland."
+      fr: "Deux pigeons blottis sur la corniche d’un mur jaune, au-dessus d’un toit de cuivre vert et d’une balustrade. Varsovie, Pologne."
+    caption:
+      en: "Pigeons nesting on a yellow wall"
+      fr: "Des pigeons nichés sur un mur jaune"
+    place:
+      en: "Warsaw, Poland"
+      fr: "Varsovie, Pologne"
+    title: { en: "Pigeons, Warsaw", fr: "Pigeons, Varsovie" }
+
+  pigeon-border-guard:
+    alt:
+      en: "A pigeon standing exactly on a painted line across worn paving stones. Warsaw, Poland."
+      fr: "Un pigeon posté exactement sur une ligne peinte en travers de dalles usées. Varsovie, Pologne."
+    caption:
+      en: "A pigeon on border duty in the park"
+      fr: "Un pigeon garde-frontière au parc"
+    place:
+      en: "Warsaw, Poland"
+      fr: "Varsovie, Pologne"
+    title: { en: "Border guard, Warsaw", fr: "Garde-frontière, Varsovie" }
+
+  bike-between-posts:
+    alt:
+      en: "A green and white bicycle leaning against a wall between two black iron posts on a sidewalk. Warsaw, Poland."
+      fr: "Un vélo vert et blanc appuyé contre un mur entre deux bornes de fer noir, sur un trottoir. Varsovie, Pologne."
+    caption:
+      en: "A bicycle between two posts"
+      fr: "Un vélo entre deux bornes"
+    place:
+      en: "Warsaw, Poland"
+      fr: "Varsovie, Pologne"
+    title: { en: "Bicycle, Warsaw", fr: "Vélo, Varsovie" }
+
+  warsaw-neon:
+    alt:
+      en: "A long exposure of a neon sign, its colors smeared into loops of yellow, pink, green and blue on black. Warsaw, Poland."
+      fr: "Une pose longue sur une enseigne au néon, ses couleurs étirées en boucles jaunes, roses, vertes et bleues sur fond noir. Varsovie, Pologne."
+    caption:
+      en: "A neon sign, long exposure"
+      fr: "Une enseigne au néon, pose longue"
+    place:
+      en: "Warsaw, Poland"
+      fr: "Varsovie, Pologne"
+    title: { en: "Neon, Warsaw", fr: "Néon, Varsovie" }
+
+  plac-zamkowy:
+    alt:
+      en: "A crowded square in evening light, Sigismund's Column in the center, pastel townhouses and the spires of the Old Town behind. Castle Square, Warsaw, Poland."
+      fr: "Une place animée dans la lumière du soir, la colonne de Sigismond au centre, des maisons pastel et les flèches de la vieille ville derrière. Place du Château, Varsovie, Pologne."
+    caption:
+      en: "Plac Zamkowy in the evening"
+      fr: "La place du Château, le soir"
+    place:
+      en: "Warsaw, Poland"
+      fr: "Varsovie, Pologne"
+    title: { en: "Plac Zamkowy, Warsaw", fr: "Place du Château, Varsovie" }
+
+  lazienki-frog:
+    alt:
+      en: "A tiny frog on a rough stone path, next to a dry leaf. Łazienki Park, Warsaw, Poland."
+      fr: "Une minuscule grenouille sur un sentier de pierre brute, à côté d’une feuille sèche. Parc Łazienki, Varsovie, Pologne."
+    caption:
+      en: "A frog in Łazienki Park"
+      fr: "Une grenouille au parc Łazienki"
+    place:
+      en: "Warsaw, Poland"
+      fr: "Varsovie, Pologne"
+    title: { en: "Łazienki Park, Warsaw", fr: "Parc Łazienki, Varsovie" }

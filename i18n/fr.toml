@@ -1,0 +1,47 @@
+[skip_to_content]
+other = "Aller au contenu"
+[languages_label]
+other = "Langue"
+[not_translated]
+other = "Page non disponible dans cette langue — affichage de l’accueil"
+[sections_nav]
+other = "Sections"
+[main_nav]
+other = "Navigation principale"
+[portrait_alt]
+other = "{{ .name }}"
+[menu]
+other = "Menu"
+[download_pdf]
+other = "Télécharger le PDF"
+[table]
+other = "Tableau"
+
+[photo_viewer]
+other = "Visionneuse de photographies"
+[close]
+other = "Fermer"
+[previous_photo]
+other = "Photographie précédente"
+[next_photo]
+other = "Photographie suivante"
+
+[cv_english_only]
+other = "Ce CV est tenu à jour en anglais."
+[cv_no_inline_pdf]
+other = "Votre navigateur ne peut pas afficher un PDF dans la page. Téléchargez-le ci-dessous."
+
+[contact_email]
+other = "Courriel"
+[contact_office]
+other = "Bureau"
+[contact_affiliation]
+other = "Affiliation"
+[contact_profile]
+other = "Page du département"
+[contact_profile_link]
+other = "Fiche doctorant, département de physique d’UC Davis"
+
+# Link preview
+[share_image_alt]
+other = "Carreaux bleus ornés d’un médaillon en étoile"

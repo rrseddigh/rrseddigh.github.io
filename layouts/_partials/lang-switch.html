@@ -1,0 +1,35 @@
+{{- /* Fixed to the same corner on every page, so it never moves. Short codes
+       only: EN / FR.
+
+       Both are links. The current language links to itself and is marked with
+       aria-current, so the control reads the same everywhere rather than
+       reflowing when one item turns into plain text.
+
+       Where a page has no translation the link falls back to that language's
+       home page and says so in its title. */ -}}
+{{- $page := . -}}
+{{- $cur  := $page.Language.Name -}}
+<nav class="lang-switch" aria-label="{{ i18n "languages_label" }}">
+  <ul>
+  {{- range site.Home.AllTranslations -}}
+    {{- $lang    := .Language -}}
+    {{- $href    := .RelPermalink -}}
+    {{- $isExact := false -}}
+    {{- range $page.AllTranslations -}}
+      {{- if eq .Language.Name $lang.Name -}}
+        {{- $href = .RelPermalink -}}
+        {{- $isExact = true -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $isCur := eq $lang.Name $cur -}}
+    <li>
+      <a href="{{ $href }}"
+         lang="{{ $lang.Locale }}"
+         hreflang="{{ $lang.Name }}"
+         {{ if $isCur }}aria-current="true"{{ end }}
+         title="{{ $lang.Label }}{{ if and (not $isExact) (not $isCur) }} — {{ i18n "not_translated" }}{{ end }}"
+         {{ if and (not $isExact) (not $isCur) }}data-fallback="home"{{ end }}>{{ $lang.Params.short | default $lang.Label }}</a>
+    </li>
+  {{- end -}}
+  </ul>
+</nav>

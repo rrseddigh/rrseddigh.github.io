@@ -1,0 +1,53 @@
+{{- /* ONE Person node, site-wide, with a stable @id. Two Person nodes with
+       different `name` values would tell Google there are two people.
+       Built from baseURL (the site root, not the language home), so every
+       page in both languages names the same node. */ -}}
+{{- $p        := site.Params.person -}}
+{{- $root     := "/" | absURL -}}
+{{- $personID := printf "%s#person" $root -}}
+{{- $siteID   := printf "%s#website" $root -}}
+
+{{- $person := dict
+    "@type" "Person"
+    "@id" $personID
+    "name" "Remi Seddigh"
+    "givenName" $p.givenName
+    "familyName" $p.familyName
+    "alternateName" $p.alternateNames
+    "url" $root
+    "jobTitle" "PhD Candidate in Theoretical Physics"
+    "email" (printf "mailto:%s" site.Params.email)
+    "knowsLanguage" (slice "en" "fa" "fr")
+    "affiliation" (dict
+      "@type" "CollegeOrUniversity"
+      "name" "Center for Quantum Mathematics and Physics (QMAP), University of California, Davis"
+      "url" "https://qmap.ucdavis.edu/")
+    "alumniOf" (slice
+      (dict "@type" "CollegeOrUniversity" "name" "University of California, Berkeley" "url" "https://www.berkeley.edu/")
+      (dict "@type" "CollegeOrUniversity" "name" "University of California, Davis"    "url" "https://www.ucdavis.edu/"))
+    "knowsAbout" (slice
+      "Holographic entropy cone" "Quantum gravity" "Quantum information"
+      "AdS/CFT correspondence")
+    "sameAs" (partial "func/sameas.html" .)
+-}}
+
+{{- $graph := slice $person (dict
+    "@type" "WebSite"
+    "@id" $siteID
+    "url" $root
+    "name" "Remi Seddigh"
+    "inLanguage" (slice "en" "fr")
+    "publisher" (dict "@id" $personID))
+-}}
+
+{{- if .IsHome -}}
+  {{- $graph = $graph | append (dict
+      "@type" "ProfilePage" "@id" (printf "%s#page" .Permalink)
+      "url" .Permalink "name" .Title
+      "isPartOf" (dict "@id" $siteID)
+      "mainEntity" (dict "@id" $personID)
+      "inLanguage" .Language.Locale) -}}
+{{- end -}}
+<script type="application/ld+json">
+{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify (dict "indent" "") | safeJS }}
+</script>

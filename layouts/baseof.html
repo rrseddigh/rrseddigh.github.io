@@ -1,0 +1,53 @@
+<!doctype html>
+{{- /* no-js is removed by the first script in <head>, so it is only ever
+       present when scripting is off. The phone menu needs it: without JS the
+       disclosure can never be closed, so the panel falls back to sitting in
+       the bar rather than hanging open over the page. */ -}}
+<html class="no-js" lang="{{ .Language.Locale }}">
+<head>
+  <script>document.documentElement.classList.remove("no-js")</script>
+  {{ partial "head/meta.html"     . }}
+  {{ partial "head/title.html"    . }}
+  {{ partial "head/hreflang.html" . }}
+  {{ partial "head/fonts.html"    . }}
+  {{ partial "head/css.html"      . }}
+  {{ partial "head/jsonld.html"   . }}
+  {{ with .OutputFormats.Get "rss" }}
+  <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
+  {{ end }}
+</head>
+{{- /* The photograph behind the whole window, painted on body::before by
+       50-hero.css. The whole frame, zoomed out behind the page; Fit, so
+       neither orientation upscales.
+
+       safeCSS because Go's escaper will not put url(...) into a style
+       attribute otherwise; the path is built by Hugo, not user input. */ -}}
+{{- $pageBg := "" -}}
+{{- with resources.Get "images/background.jpg" }}
+  {{- $pageBg = printf "url('%s')" (.Fit "2000x2000 webp q74").RelPermalink -}}
+{{- end -}}
+<body{{ if .IsHome }} data-hub{{ end }}{{ with $pageBg }} style="--page-bg:{{ . | safeCSS }};"{{ end }}>
+  <a class="skip-link" href="#main">{{ i18n "skip_to_content" }}</a>
+
+  {{- /* banner -> navbar -> page. All three outside .shell so the banner and
+         the colour band run the full width. */ -}}
+  {{ partial "banner.html" . }}
+  {{ partial "nav.html" . }}
+
+  <div class="shell">
+    <main id="main" class="main" tabindex="-1">
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+  </div>
+
+  {{- with resources.Get "js/navbar.js" }}
+    <script src="{{ .RelPermalink }}" defer></script>
+  {{- end }}
+  {{- if .Params.gallery }}
+    {{- with resources.Get "js/lightbox.js" }}
+      <script src="{{ .RelPermalink }}" defer></script>
+    {{- end }}
+  {{- end }}
+</body>
+</html>

@@ -1,0 +1,774 @@
+@layer components {
+  /* ── Nav bar ──────────────────────────────────────────────────────────
+     Its position, colour and translucency are in 50-hero.css (above 40rem)
+     and in the phone block below. --navbar-h is the bar's own height. */
+  :root { --navbar-h: 3.4rem; }
+
+  .navbar {
+    z-index: 40;
+    min-block-size: var(--navbar-h);
+    display: flex;
+    align-items: center;
+    color: var(--nav-fg);
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  @supports (backdrop-filter: blur(1px)) {
+    .navbar { backdrop-filter: blur(14px) saturate(1.3); }
+  }
+
+  /* Once it detaches from the title band there is body copy behind it, so it
+     picks up an edge. Toggled by assets/js/navbar.js. */
+  .navbar.is-stuck {
+    box-shadow: 0 1px 0 color-mix(in srgb, var(--nav-fg) 22%, transparent),
+                0 6px 18px rgb(0 0 0 / 0.18);
+  }
+
+  .navbar__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 2rem;
+    inline-size: 100%;
+    max-inline-size: 76rem;
+    margin-inline: auto;
+    padding-inline: var(--space-gutter);
+    padding-block: 0.5rem;
+  }
+  .navbar .brand {
+    color: var(--nav-fg);
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .navmenu { margin-inline-start: auto; }
+  .navbar .nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.35rem;
+    list-style: none;
+    margin: 0;
+    padding-inline: 0;
+  }
+  .navbar .nav a {
+    color: var(--nav-fg);
+    /* --font-display, not --font-ui: the menu reads as part of the title
+       block, not as UI chrome. */
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+  .navbar .nav a:hover { text-decoration: underline; text-underline-offset: 0.3em; }
+  .navbar .nav a[aria-current="page"] { color: var(--nav-accent); }
+
+  /* ── The disclosure menu ──────────────────────────────────────────────
+     Above 40rem this whole mechanism is switched off: the toggle is hidden
+     and the list is forced back into flow. Author `display` on the child
+     overrides the UA rule that hides a closed <details>'s contents, so the
+     desktop bar never depends on the open state. */
+  .navmenu__toggle {
+    display: none;                 /* turned on below 40rem */
+    list-style: none;              /* kill the disclosure triangle */
+    cursor: pointer;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--nav-fg);
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    /* 44px, so the bar's own height is set by a real tap target */
+    min-block-size: 2.75rem;
+    padding-inline: 0.5rem;
+    margin-inline-end: -0.5rem;    /* keep the label optically flush */
+  }
+  .navmenu__toggle::-webkit-details-marker { display: none; }
+
+  /* Three bars, drawn rather than typed: ☰ is missing from the subset fonts
+     and would fall back to a system face at a different weight. */
+  .navmenu__bars,
+  .navmenu__bars::before,
+  .navmenu__bars::after {
+    display: block;
+    inline-size: 1.05rem;
+    block-size: 2px;
+    background: currentColor;
+    border-radius: 1px;
+  }
+  .navmenu__bars { position: relative; }
+  .navmenu__bars::before,
+  .navmenu__bars::after { content: ""; position: absolute; inset-inline-start: 0; }
+  .navmenu__bars::before { inset-block-start: -6px; }
+  .navmenu__bars::after  { inset-block-start:  6px; }
+  .navmenu[open] .navmenu__bars { background: transparent; }
+  .navmenu[open] .navmenu__bars::before { inset-block-start: 0; rotate: 45deg; }
+  .navmenu[open] .navmenu__bars::after  { inset-block-start: 0; rotate: -45deg; }
+  @media (prefers-reduced-motion: no-preference) {
+    .navmenu__bars::before,
+    .navmenu__bars::after { transition: rotate 0.18s ease, inset-block-start 0.18s ease; }
+  }
+
+  /* No rule here tries to reveal a closed <details>. That cannot be done from
+     author CSS: the contents are hidden by content-visibility on the internal
+     slot, and setting `display: block` on the child does nothing. The element
+     ships with `open` set and a script closes it on narrow viewports instead,
+     so on a desktop it is simply never closed. */
+
+  /* ── Phones: the bar moves to the bottom ──────────────────────────────
+     At the top it was a lid: even at one row it pushed the first line of
+     text a third of the way down an iPhone SE screen. At the bottom the page
+     starts at the top of the window and scrolls underneath the bar, which
+     also puts it in the thumb's reach rather than at the far corner of a
+     phone held one-handed. */
+  @media (max-width: 40rem) {
+    .navbar {
+      position: fixed;
+      inset-block-start: auto;
+      inset-block-end: 0;
+      inset-inline: 0;
+      /* Clears the iPhone home indicator, and the iOS Safari toolbar's own
+         resting height. Zero everywhere that has no inset. */
+      padding-block-end: env(safe-area-inset-bottom, 0px);
+      /* Over body copy at all times, so it is opaque. */
+      background: var(--nav-bg);
+      box-shadow: 0 -2px 14px rgb(0 0 0 / 0.28);
+    }
+
+    /* Room for the bar, so the last line of the footer is not stuck under
+       it. Used by the sheet's bottom padding in 50-hero.css. */
+    :root { --navbar-h-mobile: calc(3.5rem + env(safe-area-inset-bottom, 0px)); }
+
+    .navmenu__toggle { display: flex; }
+    /* The bar itself is one row; the list drops out of flow above it, so
+       it can be full-bleed without making the bar any taller. */
+    /* Button first, then the name, then the languages pushed to the far end.
+       These are flex `order` values, so they follow the writing direction. */
+    .navmenu { position: static; margin-inline-start: 0; order: 1; }
+    .navbar .brand { order: 2; }
+    .lang-switch { order: 3; margin-inline-start: auto; }
+    /* A little air between the button and the name, without widening the
+       gap between the language codes. */
+    .navmenu { margin-inline-end: 0.35rem; }
+
+    /* One row, enforced. Collapsing the menu is pointless if the bar's own
+       three items wrap instead. */
+    .navbar__inner { flex-wrap: nowrap; column-gap: 0.5rem; }
+    .navbar .brand {
+      /* Safety net only — at the sizes above it never actually clips. Without
+         min-inline-size a flex item refuses to shrink below its text. */
+      min-inline-size: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    /* Bare bars did not read as a control. An outline and the word make it a
+       button rather than decoration. */
+    .navmenu__toggle {
+      border: 1px solid color-mix(in srgb, var(--nav-fg) 45%, transparent);
+      border-radius: 999px;
+      padding-inline: 0.7rem;
+      margin-inline-end: 0;
+    }
+    .navmenu[open] .navmenu__toggle {
+      background: color-mix(in srgb, var(--nav-fg) 16%, transparent);
+    }
+
+    /* Keep the button from being the thing that shrinks. */
+    .navmenu { flex-shrink: 0; }
+
+    /* The word costs ~52px. On the narrowest phones the bars carry it alone —
+       the outlined pill is what makes it read as a button, the word is a
+       bonus — and the label stays for screen readers. */
+    @media (max-width: 26rem) {
+      .navmenu__label {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      .navmenu__toggle { padding-inline: 0.55rem; }
+    }
+
+    /* With JS off the panel is never closed, so it would hang open over the
+       page. Put it back in the flow of the bar instead, and hide the toggle
+       that cannot do anything. */
+    .no-js .navmenu__toggle { display: none; }
+    .no-js .navmenu { position: static; margin-inline-start: 0; }
+    .no-js .navmenu > .nav {
+      position: static;
+      background: none;
+      box-shadow: none;
+      max-block-size: none;
+    }
+    .no-js .navmenu > .nav ul { display: flex; }
+    .no-js .navmenu > .nav li + li { border-block-start: 0; }
+    .no-js .navmenu > .nav a { min-block-size: 0; padding-inline: 0; font-size: 0.95rem; }
+
+    .navmenu > .nav {
+      position: absolute;
+      inset-inline: 0;
+      /* Opens upward, out of the bar and over the page. */
+      inset-block-end: 100%;
+      inset-block-start: auto;
+      background: var(--nav-bg);
+      box-shadow: 0 -12px 24px rgb(0 0 0 / 0.3);
+      /* A long menu on a short phone must not become unreachable. svh, not
+         vh: on iOS vh assumes the browser chrome is retracted, so a vh-sized
+         panel is taller than the window it is meant to fit inside. */
+      max-block-size: calc(100svh - 100%);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding-block: 0.35rem;
+    }
+    .navmenu > .nav ul { display: block; }
+    .navmenu > .nav li + li { border-block-start: 1px solid rgb(255 255 255 / 0.12); }
+    .navmenu > .nav a {
+      display: flex;
+      align-items: center;
+      min-block-size: 2.75rem;
+      padding-inline: var(--space-gutter);
+      font-size: 1rem;
+    }
+    .navmenu > .nav a[aria-current="page"] {
+      /* An underline would read as a hover state in a stacked list. */
+      box-shadow: inset 3px 0 0 var(--nav-accent);
+    }
+  }
+
+  /* ── Photography gallery ──────────────────────────────────────────────
+     Masonry-ish columns so portrait and landscape frames sit together
+     without cropping. */
+  /* Width in rem, not ch: the tiling never depends on which face is
+     loaded. */
+  .gallery {
+    columns: 3 17rem;
+    column-gap: 1rem;
+    max-inline-size: 62rem;
+    /* The intro above it is a single line, so a section gap set it adrift
+       from the pictures it describes. The same step as the home page's
+       intro to its section links. */
+    margin-block-start: calc(var(--space-flow) * 1.5);
+  }
+  .gallery, .gallery__credit { max-inline-size: 62rem; }
+  .gallery__item {
+    break-inside: avoid;
+    margin-block-end: 1rem;
+  }
+  .gallery__item img {
+    inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--radius);
+    background: var(--bg-subtle);
+  }
+  .gallery__item figcaption {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    margin-block-start: 0.45rem;
+    line-height: 1.4;
+    text-wrap: pretty;
+  }
+  /* The place after the full stop. Italic is the browser's own em, in Source
+     Serif's true italic; this rule only exists so the place can be told apart
+     from an italicised foreign term if it ever wants a different treatment. */
+  .gallery__place { font-style: italic; }
+
+  .gallery__link {
+    display: block;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: zoom-in;
+  }
+  .gallery__link:hover img { filter: brightness(1.04) saturate(1.04); }
+  .gallery__link img { transition: filter 0.2s ease; }
+  @media (prefers-reduced-motion: reduce) { .gallery__link img { transition: none; } }
+
+  /* ── Lightbox ─────────────────────────────────────────────────────────
+     <dialog> fills the viewport so a click anywhere outside the picture can
+     close it; the figure inside is what is actually sized. */
+  .lightbox {
+    inline-size: 100%;
+    max-inline-size: 100%;
+    block-size: 100%;
+    max-block-size: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    /* Scrolls when the picture plus caption exceed the viewport — otherwise
+       the only thing that moved was the page behind. overscroll-behavior
+       stops that scroll chaining through to the document. */
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  /* Freeze the document while the viewer is open, so the wheel scrolls the
+     picture and not the gallery underneath.
+
+     iOS Safari ignores `overflow: hidden` on <body> for touch scrolling, so
+     the gallery still slid around behind the picture there. Pinning the body
+     is the only thing that holds; lightbox.js sets --scroll-y and restores the
+     position on close, because position: fixed otherwise jumps to the top. */
+  .has-lightbox, .has-lightbox body { overflow: hidden; }
+  .has-lightbox body {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-start: calc(-1 * var(--scroll-y, 0px));
+    inline-size: 100%;
+  }
+
+  .lightbox::backdrop { background: rgb(0 0 0 / 0.82); }
+  @supports (backdrop-filter: blur(1px)) {
+    .lightbox::backdrop { backdrop-filter: blur(6px); }
+  }
+  .lightbox__figure {
+    margin: 0;
+    /* Hands the browser the vertical axis and keeps the horizontal one for the
+       swipe. Without it a sideways drag is treated as a pan of the scrolling
+       dialog, and the gesture dies as a pointercancel partway through. */
+    touch-action: pan-y;
+    /* min, not fixed: the figure centres in a full viewport but is allowed to
+       grow past it, which is what makes the dialog scroll. */
+    min-block-size: 100%;
+    display: grid;
+    /* Both rows sized to their content and packed together in the middle.
+       With the picture's row at 1fr it took all the height the caption did
+       not, the picture sat at the top of it and the caption at the foot of
+       the screen, with a band of empty backdrop between them. */
+    grid-template-rows: auto auto;
+    align-content: center;
+    justify-items: center;
+    gap: 0.6rem;
+    padding: clamp(0.75rem, 3vw, 2.5rem);
+    padding-block-end: clamp(1rem, 3vw, 2rem);
+  }
+  .lightbox__img {
+    /* An <img> is draggable by default, and starting a native drag cancels the
+       pointer sequence the swipe depends on — measured as pointerdown followed
+       straight by pointercancel. The markup carries draggable="false" too, for
+       Firefox, which does not implement -webkit-user-drag. */
+    -webkit-user-drag: none;
+    user-select: none;
+    /* As large as the screen allows, less room for the controls: 4.5rem a
+       side clears the prev/next buttons, and 9rem of height covers the
+       dialog's padding and a two-line caption with its date under the
+       picture. The sources are 2400px on the long edge, so nothing here
+       upscales them on an ordinary screen. */
+    max-inline-size: min(100vw - 9rem, 2400px);
+    max-block-size: calc(100svh - 9rem);
+    inline-size: auto;
+    block-size: auto;
+    object-fit: contain;
+    border-radius: 2px;
+    box-shadow: 0 10px 50px rgb(0 0 0 / 0.5);
+  }
+  .lightbox__caption {
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: #EDEAE3;
+    text-align: center;
+    max-inline-size: 60ch;
+    text-wrap: pretty;
+  }
+  .lightbox__caption[hidden] { display: none; }
+  /* The capture date, on its own line under the caption, a shade quieter. */
+  .lightbox__date { display: block; margin-top: 0.2em; opacity: 0.7; }
+
+  .lightbox__close,
+  .lightbox__nav {
+    position: fixed;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border-radius: 50%;
+    color: #fff;
+    background: rgb(255 255 255 / 0.10);
+    border: 1px solid rgb(255 255 255 / 0.18);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .lightbox__close:hover,
+  .lightbox__nav:hover { background: rgb(255 255 255 / 0.22); }
+  .lightbox__close {
+    inset-block-start: clamp(0.5rem, 2vw, 1.25rem);
+    inset-inline-end: clamp(0.5rem, 2vw, 1.25rem);
+  }
+  .lightbox__nav {
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    font-size: 1.9rem;
+  }
+  .lightbox__nav--prev { inset-inline-start: clamp(0.5rem, 2vw, 1.25rem); }
+  .lightbox__nav--next { inset-inline-end:   clamp(0.5rem, 2vw, 1.25rem); }
+
+  /* On a phone the side buttons would sit over the picture, so they move to
+     the bottom corners and the picture gets the full width. */
+  @media (max-width: 34rem) {
+    .lightbox__nav {
+      inset-block-start: auto;
+      inset-block-end: clamp(0.5rem, 2vw, 1.25rem);
+      translate: none;
+    }
+    .lightbox__figure { padding-block-end: 4.5rem; }
+    .lightbox__caption { font-size: 0.8125rem; }
+    /* 78vw is right on a desktop, where the backdrop around the picture is
+       what makes it read as a preview. On a 375px phone it threw away 82px of
+       an already small frame, and the buttons no longer sit alongside the
+       picture to need the room. */
+    .lightbox__img { max-inline-size: 94vw; max-block-size: 62svh; }
+  }
+
+  /* One credit line under the whole grid, covering every frame. */
+  .gallery__credit a { color: inherit; text-underline-offset: 0.2em; }
+  .gallery__credit a:hover { color: var(--accent); }
+  .gallery__credit span + a { margin-inline-start: 0.4rem; }
+  .gallery__credit {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    margin-block-start: 1.5rem;
+    padding-block-start: 0.9rem;
+    border-block-start: var(--rule-width) solid var(--rule);
+  }
+
+  /* ── Language switcher ────────────────────────────────────────────────
+     Sits in the colour band, at the inline end, in the same place on every
+     page. Short codes EN / FR, both links. */
+  .lang-switch { font-family: var(--font-ui); }
+  .lang-switch ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding-inline: 0;
+  }
+  /* The li, not the a, carries the row. Once the anchor is given a 44px touch
+     height it becomes a block box, and an inline-block separator beside a
+     block box stacks instead of sitting alongside — which silently made the
+     switcher 71px tall and the whole bottom bar with it. */
+  .lang-switch li { display: flex; align-items: center; }
+  .lang-switch li + li::before {
+    content: "";
+    display: inline-block;
+    inline-size: 1px;
+    block-size: 0.85em;
+    background: currentColor;
+    opacity: 0.35;
+    vertical-align: -0.1em;
+  }
+  .lang-switch a {
+    display: inline-block;
+    font-family: var(--font-display);
+    padding: 0.2rem 0.55rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    color: var(--nav-fg);
+  }
+  .lang-switch a:hover { text-decoration: underline; text-underline-offset: 0.3em; }
+  .lang-switch a[aria-current="true"] { font-weight: 600; color: var(--nav-accent); }
+
+  .footer-meta {
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    color: var(--fg-muted);
+    margin-block-start: 0.4rem;
+  }
+
+  /* ── PDF card ─────────────────────────────────────────────────────── */
+  .pdf-card {
+    display: inline-flex;
+    gap: 0.75rem;
+    align-items: baseline;
+    font-family: var(--font-ui);
+    font-size: 0.88rem;
+    text-decoration: none;
+    border: var(--rule-width) solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.55rem 0.95rem;
+  }
+  .pdf-card:hover { border-color: var(--accent); color: var(--accent); }
+  .pdf-card__meta { color: var(--fg-muted); font-variant-numeric: tabular-nums; }
+
+  /* ── Home page: portrait beside the blurb ─────────────────────────────
+     Grid rather than a float, so the text never wraps around the bottom of
+     the picture and the two stay as two blocks. Below 48rem the photo goes
+     above the text, at a size that does not push the writing off the screen. */
+  .intro--with-photo {
+    display: grid;
+    /* The portrait track shrinks on the way down instead of holding 15rem to
+       the last pixel, so the section links beside it keep their room.
+       clamp() rather than a breakpoint so there is no threshold to keep in
+       step. */
+    grid-template-columns: clamp(11rem, 20vw, 15rem) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 2.75rem);
+    align-items: start;
+  }
+  .intro__photo {
+    inline-size: 100%;
+    block-size: auto;
+    border-radius: var(--radius);
+    /* The one place a shadow is warranted: the portrait is the only
+       photographic element on an otherwise typographic page, and without an
+       edge it floats on the cream ground. */
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.12), 0 8px 24px rgb(0 0 0 / 0.14);
+  }
+  .intro__text { max-inline-size: var(--measure); }
+
+  /* The column beside the portrait: the blurb, then the section links under
+     it. The cap stays on .intro__text so the prose keeps its reading measure
+     while each link below it runs the full width of the column. */
+  .intro__col { min-inline-size: 0; }
+  .intro__col .section-cards {
+    margin-block-start: calc(var(--space-flow) * 1.5);
+  }
+
+  @media (max-width: 48rem) {
+    .intro--with-photo {
+      grid-template-columns: minmax(0, 1fr);
+      gap: clamp(1.25rem, 5vw, 2rem);
+    }
+    .intro__photo { max-inline-size: 13rem; }
+  }
+
+  /* ── Home page: the index of sections ─────────────────────────────────
+     One row per nav item, each a whole-block link with the section's own
+     one-line blurb under it. Rules rather than boxes: the page is
+     typographic everywhere else, and bordered cards would be the loudest
+     thing on it.
+
+     A single column at every width, each link spanning the whole of it:
+     the list reads top to bottom in nav order, and a blurb gets the full
+     measure rather than being folded into half of it. */
+  .section-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    /* A row gap. With rows touching, the rules at even spacing read as one
+       ruled block rather than separate things. Kept small: the padding
+       inside each row already does most of the separating. */
+    row-gap: clamp(0.4rem, 1.25vw, 0.85rem);
+    margin-block-start: var(--space-section);
+  }
+  .section-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding-block: 0.85rem 0.95rem;
+    border-block-start: 2px solid var(--rule);
+    transition: border-color 0.15s ease;
+  }
+  .section-card:hover,
+  .section-card:focus-visible { border-block-start-color: var(--accent); }
+  .section-card__title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: var(--leading-tight);
+    color: var(--heading);
+  }
+  .section-card__blurb {
+    display: block;
+    margin-block-start: 0.35rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--fg-muted);
+    text-wrap: pretty;
+  }
+  .section-card:hover .section-card__title,
+  .section-card:focus-visible .section-card__title {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  /* ── Diagrams ─────────────────────────────────────────────────────────
+     Line art from a slide deck. They sit outside .prose's measure because a
+     diagram is not read at text width, but stay narrower than the sheet so
+     they do not dominate the page. */
+  .fig {
+    margin-block: var(--space-section);
+    max-inline-size: min(34rem, 100%);
+    margin-inline: auto;
+  }
+  .fig img {
+    inline-size: 100%;
+    block-size: auto;
+    /* The crops are line art on white. On the cream page an untreated white
+       rectangle reads as a hole, so give it a ground and a hairline of its
+       own. */
+    background: #fff;
+    border: var(--rule-width) solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.75rem;
+  }
+  .fig figcaption {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--fg-muted);
+    margin-block-start: 0.6rem;
+    text-wrap: pretty;
+  }
+
+  /* Wide screens: the diagrams move into the empty side of the page, floated
+     to the inline end, and the text wraps around them. */
+  @media (min-width: 66rem) {
+    .fig {
+      float: inline-end;
+      /* 17rem, not 20: a diagram taller than the paragraph beside it hangs
+         past the end of the text, and the next heading clears floats, so the
+         overhang turns into a gap before it. The four diagrams on the
+         research page stack to about 1150px against ~1230px of prose; at
+         20rem they came to 1260 and the last one hung 575px past the text. */
+      inline-size: 17rem;
+      max-inline-size: none;
+      margin-inline-start: 2.25rem;
+      /* Level with the first line of its paragraph rather than below it. A
+         float sits at the foot of the paragraph before it, not at the top of
+         the one beside it, so with no top margin it touched the text above;
+         one paragraph gap drops it level with the text beside it. */
+      margin-block: var(--space-flow) 1.25rem;
+    }
+    /* Widened here rather than in 20-layout.css: .prose is capped in the
+       `type` layer, which is declared after `layout`, so a rule there loses
+       whatever its specificity. */
+    .prose { max-inline-size: calc(var(--measure) + 22rem); }
+
+    /* All of them on the same side: one column of pictures against one
+       column of text is easier to read down.
+
+       Every figure starts below any float still open above it. Without this,
+       two diagrams overlap vertically and the paragraph between them is
+       squeezed into the channel, four or five words a line. It costs a little
+       vertical space and can push a diagram lower than the paragraph that
+       introduces it, which is the better of the two problems. */
+    .fig { clear: both; }
+    /* The footer must not ride up beside a floated figure. */
+    .site-footer { clear: both; }
+  }
+
+  /* ── Touch targets ────────────────────────────────────────────────────
+     Keyed on `pointer: coarse` rather than a width breakpoint: the thing that
+     decides how big a control has to be is the finger, not the screen. A
+     narrow desktop window keeps the tighter mouse-sized spacing.
+
+     44px is Apple's HIG figure and WCAG 2.5.5 (AAA). WCAG 2.5.8 (AA) asks
+     only 24px but exempts links inline in a sentence — which is why the prose
+     links in .prose are left alone here and the standalone ones are not. */
+  @media (pointer: coarse) {
+    .lang-switch a {
+      display: flex;
+      align-items: center;
+      min-block-size: 2.75rem;
+    }
+    /* Block, not flex, and the height comes from line-height. `display: flex`
+       gets the 44px too, but it makes the anchor a flex container, and
+       text-overflow does not apply to one — a long name would be cut
+       mid-glyph with no ellipsis instead of degrading legibly. */
+    .navbar .brand {
+      display: block;
+      min-block-size: 2.75rem;
+      line-height: 2.75rem;
+    }
+    /* Width can stay tight — "EN" is two characters and the row is already
+       44px tall, which clears 2.5.8's 24x24 with room to spare. */
+    .lang-switch a { justify-content: center; min-inline-size: 2.25rem; }
+
+    .footer-meta a,
+    .gallery__credit a {
+      display: inline-block;
+      padding-block: 0.55rem;
+    }
+    .pdf-card { padding-block: 0.85rem; }
+  }
+
+  /* ── CV ───────────────────────────────────────────────────────────────
+     The page is the PDF. A4 is 1:1.414, so the frame is given that ratio and
+     simply gets taller as the column widens. Capped against the viewport so a
+     tall window does not produce a frame taller than the screen with the
+     scrollbar for the embedded document somewhere off the bottom. */
+  .pdfview {
+    margin-block-start: var(--space-flow);
+    /* The viewer's width, named once: the frame's height is derived from it. */
+    --pdf-w: min(58rem, calc(100vw - 2 * var(--space-gutter)));
+  }
+
+  .pdfview__frame {
+    display: block;
+    inline-size: 100%;
+    block-size: min(calc(var(--pdf-w) * 1.414), 88svh);
+    min-block-size: 26rem;
+    border: var(--rule-width) solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--bg-subtle);
+  }
+  .pdfview__fallback {
+    margin: 0;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: var(--fg-muted);
+  }
+  .cv-actions { margin-block-start: var(--space-flow); }
+  .cv-note {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+  }
+
+  /* Phones have no usable inline PDF viewer: iOS Safari renders only the
+     first page with no way to scroll it, which reads as a broken image. Drop
+     the frame and let the download card carry the page. */
+  @media (max-width: 48rem), (pointer: coarse) {
+    .pdfview { display: none; }
+  }
+
+  /* ── Wide content on a narrow screen ──────────────────────────────────
+     A table does not reflow — it scrolls, inside its own box, so the page
+     itself never scrolls sideways. Applied to the wrapper Hugo's render hook
+     puts around every markdown table. */
+  .table-wrap {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    max-inline-size: 100%;
+  }
+
+  /* ── CV colophon ──────────────────────────────────────────────────────
+     Sits under the viewer as a note about the document, not as an
+     introduction to it, so it is set quieter than body text. */
+  .cv-colophon {
+    margin-block-start: var(--space-flow);
+    font-size: 0.94em;
+    color: var(--fg-muted);
+  }
+
+  /* ── Contact ──────────────────────────────────────────────────────────
+     Label and value, as a two-column grid where there is room and stacked
+     where there is not. `align-items: baseline` so the label sits on the
+     first line of a multi-line value rather than centred against the block.
+     No fixed label width: the labels differ in length between languages. */
+  .contact {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.55rem 1.4rem;
+    align-items: baseline;
+    margin-block-start: var(--space-flow);
+  }
+  .contact dt {
+    font-family: var(--font-ui);
+    font-size: 0.8em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+  .contact dd { margin: 0; }
+
+  @media (max-width: 34rem) {
+    .contact { grid-template-columns: 1fr; gap: 0.15rem; }
+    .contact dd + dt { margin-block-start: 0.9rem; }
+  }
+}

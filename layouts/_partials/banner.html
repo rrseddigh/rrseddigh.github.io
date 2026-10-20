@@ -1,0 +1,16 @@
+{{- /* The title band at the top of every page. It holds no image of its own:
+       the photograph behind the whole page shows through it.
+
+       The home page says the name; every other page says its own title, given
+       the same treatment. 50-hero.css then hides the <h1> in the page body,
+       since this element is standing in for it. */ -}}
+<div class="banner{{ if not .IsHome }} banner--sliver{{ end }}">
+  <div class="banner__hero" aria-hidden="true">
+    <p class="banner__name">{{ cond .IsHome site.Title .Title }}</p>
+    <span class="banner__rule"></span>
+  </div>
+  {{- /* Sits at the foot of the band. navbar.js watches it, so the bar only
+         turns opaque once the name has scrolled past, rather than on the first
+         pixel of scroll. */ -}}
+  <div class="banner__sentinel" aria-hidden="true"></div>
+</div>

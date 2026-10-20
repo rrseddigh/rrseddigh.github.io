@@ -1,0 +1,8 @@
+{{- /* Only URLs that actually exist. An empty sameAs entry is worse than none. */ -}}
+{{- $s := slice -}}
+{{- with site.Params.ucdavisProfile }}{{ $s = $s | append . }}{{ end -}}
+{{- with site.Params.orcid }}{{ $s = $s | append (printf "https://orcid.org/%s" .) }}{{ end -}}
+{{- with site.Params.arxivAuthor }}{{ $s = $s | append . }}{{ end -}}
+{{- with site.Params.scholar }}{{ $s = $s | append . }}{{ end -}}
+{{- with site.Params.github }}{{ $s = $s | append (printf "https://github.com/%s" .) }}{{ end -}}
+{{- return $s -}}

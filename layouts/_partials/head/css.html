@@ -1,0 +1,22 @@
+{{- $files := slice
+      "css/00-reset.css"
+      "css/fonts.css"
+      "css/10-tokens.css"
+      "css/20-layout.css"
+      "css/30-typography.css"
+      "css/40-components.css"
+      "css/50-hero.css" -}}
+
+{{- $res := slice -}}
+{{- range $files }}
+  {{- with resources.Get . }}{{ $res = $res | append . }}
+  {{- else }}{{ errorf "missing stylesheet: %s" . }}{{ end }}
+{{- end -}}
+
+{{- $css := $res | resources.Concat "css/site.css" -}}
+{{- if hugo.IsProduction -}}
+  {{- $css = $css | minify | fingerprint "sha384" -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+{{- else -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+{{- end -}}

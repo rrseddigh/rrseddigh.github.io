@@ -1,0 +1,44 @@
+{{ define "main" }}
+  {{ partial "page-head.html" . }}
+
+  {{- with resources.Get "cv/remi-seddigh-cv.pdf" }}
+  {{- /* The page IS the PDF. <object> rather than <iframe>: its fallback
+         content is what a browser with no inline PDF viewer renders, which
+         covers iOS Safari and most Android browsers, where an <iframe> to a
+         PDF shows a blank white box instead. The download card below is
+         always present regardless, because the fallback only appears when the
+         viewer is absent, not when it is merely bad. */ -}}
+  <div class="pdfview">
+    <object class="pdfview__frame"
+            data="{{ .RelPermalink }}#view=FitH"
+            type="application/pdf"
+            aria-label="{{ $.Title }}">
+      <p class="pdfview__fallback">
+        {{ i18n "cv_no_inline_pdf" }}
+      </p>
+    </object>
+  </div>
+
+  <p class="cv-actions">
+    <a class="pdf-card" href="{{ .RelPermalink }}" download>
+      <span>{{ i18n "download_pdf" }}</span>
+      <span class="pdf-card__meta">PDF, {{ math.Round (div (len .Content) 1024.0) }}&nbsp;KB</span>
+    </a>
+  </p>
+  {{- end }}
+
+  {{- /* The colophon sits under the viewer, not over it. The page IS the PDF,
+         so anything above the frame pushes the document itself below the
+         fold — the reader has to scroll past an explanation to reach the
+         thing being explained. */ -}}
+  <article class="prose cv-colophon">
+    {{ .Content }}
+
+    {{- /* The CV itself is in English on both versions of the site, which is
+           normal for an academic CV. Say so rather than leaving a reader
+           wondering whether the translation failed. */ -}}
+    {{- if ne .Language.Name "en" }}
+    <p class="cv-note">{{ i18n "cv_english_only" }}</p>
+    {{- end }}
+  </article>
+{{ end }}

@@ -1,0 +1,20 @@
+[[main]]
+  name    = 'Recherche'
+  pageRef = '/research'
+  weight  = 10
+[[main]]
+  name    = 'Enseignement'
+  pageRef = '/teaching'
+  weight  = 20
+[[main]]
+  name    = 'CV'
+  pageRef = '/cv'
+  weight  = 30
+[[main]]
+  name    = 'Photographie'
+  pageRef = '/photography'
+  weight  = 35
+[[main]]
+  name    = 'Contact'
+  pageRef = '/contact'
+  weight  = 40

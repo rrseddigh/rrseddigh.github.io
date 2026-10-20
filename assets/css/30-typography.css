@@ -1,0 +1,97 @@
+@layer type {
+  .prose {
+    max-inline-size: var(--measure);
+    text-wrap: pretty;
+  }
+
+  .prose > * + * { margin-block-start: var(--space-flow); }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    line-height: var(--leading-tight);
+    text-wrap: balance;
+    font-weight: 600;
+  }
+  h2, h3 { color: var(--heading); }
+  h2 { font-weight: 700; }
+
+  h1 { font-size: var(--scale-h1); }
+  h2 { font-size: var(--scale-h2); }
+  h3 { font-size: var(--scale-h3); }
+
+  .prose > h2 { margin-block-start: var(--space-section); }
+  .prose > h3 { margin-block-start: calc(var(--space-flow) * 1.8); }
+  /* A single opening line directly before the first heading (the teaching
+     page) belongs to what follows, so half a section gap rather than a whole
+     one. */
+  .prose > p:first-child + h2 { margin-block-start: calc(var(--space-section) / 2); }
+
+  /* The tagline under the name, set as a section heading rather than as a
+     caption: the same size, weight and colour an h2 gets, so the home page
+     opens the way "Research Interests" opens the research page. 50-hero.css
+     gives both the hairline underneath.
+
+     No max-inline-size: a heading's rule runs the width of the column, and
+     capping this at 54ch left the underline stopping short of it. */
+  .lede {
+    font-family: var(--font-display);
+    font-size: var(--scale-h2);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    color: var(--heading);
+    text-wrap: balance;
+  }
+
+  a { text-decoration-thickness: 0.06em; text-underline-offset: 0.16em; }
+  .prose a { color: var(--accent); }
+  .prose a:hover { text-decoration-thickness: 0.12em; }
+
+  code, pre, kbd, samp { font-family: var(--font-mono); font-size: 0.9em; }
+  pre {
+    background: var(--bg-subtle);
+    padding: 1rem 1.15rem;
+    border-radius: var(--radius);
+    overflow-x: auto;
+  }
+
+  blockquote {
+    border-inline-start: 3px solid var(--rule);
+    padding-inline-start: 1.15rem;
+    color: var(--fg-muted);
+    font-style: italic;
+  }
+
+  hr { border: 0; border-block-start: var(--rule-width) solid var(--rule); margin-block: var(--space-section); }
+
+  table { font-size: 0.94em; }
+  th, td {
+    text-align: start;
+    padding: 0.55rem 0.9rem 0.55rem 0;
+    border-block-end: 1px solid var(--rule);
+  }
+  th { font-family: var(--font-ui); font-weight: 600; font-size: 0.85em; letter-spacing: 0.04em; text-transform: uppercase; }
+
+  .brand {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: var(--leading-tight);
+  }
+
+  .nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    list-style: none;
+    padding-inline: 0;
+    margin: 0;
+  }
+  .nav a {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .nav a:hover { text-decoration: underline; }
+  .nav a[aria-current="page"] { color: var(--accent); }
+}

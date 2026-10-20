@@ -1,0 +1,23 @@
+# pageRef (not url) makes Hugo resolve the language-correct permalink and
+# fail the build if the target page does not exist in this language.
+
+[[main]]
+  name    = 'Research'
+  pageRef = '/research'
+  weight  = 10
+[[main]]
+  name    = 'Teaching'
+  pageRef = '/teaching'
+  weight  = 20
+[[main]]
+  name    = 'CV'
+  pageRef = '/cv'
+  weight  = 30
+[[main]]
+  name    = 'Photography'
+  pageRef = '/photography'
+  weight  = 35
+[[main]]
+  name    = 'Contact'
+  pageRef = '/contact'
+  weight  = 40

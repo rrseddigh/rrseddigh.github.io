@@ -1,0 +1,42 @@
+{{ define "main" }}
+  {{ partial "page-head.html" . }}
+
+  <article class="prose">
+    {{ .Content }}
+
+    {{- /* The address deliberately stops at the campus: no street line.
+
+           Deliberately no telephone number, and no web form. A form on a
+           static site needs a third-party endpoint that receives every message
+           first; a mailto is the version where nobody is in the middle. */ -}}
+    {{- $c := hugo.Data.contact -}}
+    <dl class="contact">
+      <dt>{{ i18n "contact_email" }}</dt>
+      <dd><a href="mailto:{{ site.Params.email }}">{{ site.Params.email }}</a></dd>
+
+      <dt>{{ i18n "contact_office" }}</dt>
+      <dd>{{ $c.office }}</dd>
+
+      <dt>{{ i18n "contact_affiliation" }}</dt>
+      <dd>
+        {{ $c.institution }}<br>
+        {{ $c.address }}
+      </dd>
+
+      {{- with site.Params.ucdavisProfile }}
+      <dt>{{ i18n "contact_profile" }}</dt>
+      <dd><a href="{{ . }}">{{ i18n "contact_profile_link" }}</a></dd>
+      {{- end }}
+
+      {{- with site.Params.orcid }}
+      <dt>ORCID</dt>
+      <dd><a href="https://orcid.org/{{ . }}">{{ . }}</a></dd>
+      {{- end }}
+
+      {{- with site.Params.linkedin }}
+      <dt>LinkedIn</dt>
+      <dd><a href="{{ . }}">{{ path.Base . }}</a></dd>
+      {{- end }}
+    </dl>
+  </article>
+{{ end }}

@@ -1,0 +1,23 @@
+{{- /* The home page's index of its own sections: one row per nav item, each
+       with the one-line `blurb` that section carries in its front matter.
+
+       Ranges over the MENU rather than .Sections, so the order and the names
+       come from config/_default/menus.*.toml and cannot drift out of step
+       with the nav bar above. Menu entries are declared with pageRef, so
+       .Page is resolved and the blurb comes straight off the target page in
+       the current language.
+
+       A section with no blurb still gets its row — the link is the point, the
+       description is the courtesy. */ -}}
+{{- with site.Menus.main }}
+<nav class="section-cards" aria-label="{{ i18n "sections_nav" }}">
+  {{- range . }}
+  <a class="section-card" href="{{ .URL }}">
+    <span class="section-card__title">{{ .Name }}</span>
+    {{- with .Page }}{{ with .Params.blurb }}
+    <span class="section-card__blurb">{{ . }}</span>
+    {{- end }}{{ end }}
+  </a>
+  {{- end }}
+</nav>
+{{- end }}

@@ -1,0 +1,50 @@
+[skip_to_content]
+other = "Skip to content"
+[languages_label]
+other = "Language"
+[not_translated]
+other = "Not available in this language — showing the home page"
+[sections_nav]
+other = "Sections"
+[main_nav]
+other = "Main"
+[portrait_alt]
+other = "{{ .name }}"
+[menu]
+other = "Menu"
+[download_pdf]
+other = "Download PDF"
+[table]
+other = "Table"
+
+# Photography lightbox
+[photo_viewer]
+other = "Photograph viewer"
+[close]
+other = "Close"
+[previous_photo]
+other = "Previous photograph"
+[next_photo]
+other = "Next photograph"
+
+# CV
+[cv_english_only]
+other = "This CV is maintained in English."
+[cv_no_inline_pdf]
+other = "Your browser cannot show a PDF inline. Download it below."
+
+# Contact
+[contact_email]
+other = "Email"
+[contact_office]
+other = "Office"
+[contact_affiliation]
+other = "Affiliation"
+[contact_profile]
+other = "Department page"
+[contact_profile_link]
+other = "Graduate student profile, UC Davis Physics"
+
+# Link preview
+[share_image_alt]
+other = "Blue tilework with a star-shaped medallion"

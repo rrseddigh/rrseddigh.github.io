@@ -1,0 +1,32 @@
+{{- /* Wraps every markdown table in a scroll container.
+
+       A table does not reflow — the teaching page's course/term/role rows are
+       wider than a phone at any font size that stays readable. Without this
+       the table pushes the whole document sideways; with it, the table
+       scrolls inside its own box and the page does not.
+
+       tabindex + role make the scroll box reachable from the keyboard, which
+       is required once a region scrolls: otherwise a keyboard-only visitor
+       cannot reach the columns that are off-screen. */ -}}
+<div class="table-wrap" tabindex="0" role="region" aria-label="{{ i18n "table" }}">
+  <table>
+    <thead>
+      {{- range .THead }}
+      <tr>
+        {{- range . }}
+        <th{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</th>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </thead>
+    <tbody>
+      {{- range .TBody }}
+      <tr>
+        {{- range . }}
+        <td{{ with .Alignment }} style="text-align: {{ . }}"{{ end }}>{{ .Text }}</td>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+</div>

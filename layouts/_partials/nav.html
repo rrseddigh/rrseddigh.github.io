@@ -1,0 +1,45 @@
+{{- /* The bar under the title band, in a colour taken from the background
+       photograph. Carries the name and the section links. */ -}}
+<header class="navbar" role="banner">
+  <div class="navbar__inner">
+    <a class="brand" href="{{ relLangURL "/" }}">{{ site.Title }}</a>
+
+    {{- /* <details> rather than a scripted menu: on a phone the links collapse
+           behind a toggle so the bar stays one row.
+
+           details/summary gives the open state, the keyboard behaviour and the
+           implicit aria-expanded for free, and works with JS off. Above 40rem
+           the summary is hidden and the list is forced back to visible, so the
+           element is inert on a desktop. */ -}}
+    {{- /* `open` in the markup, closed again by the script below when the
+           viewport is narrow. NOT the other way round.
+
+           A closed <details> hides its contents through content-visibility on
+           the internal slot, and author CSS on the child cannot override that,
+           so a desktop bar that relied on that override would render with no
+           menu links at all. */ -}}
+    <details class="navmenu" open>
+      <summary class="navmenu__toggle">
+        <span class="navmenu__bars" aria-hidden="true"></span>
+        <span class="navmenu__label">{{ i18n "menu" }}</span>
+      </summary>
+      <nav class="nav" aria-label="{{ i18n "main_nav" }}">
+        <ul>
+          {{- range site.Menus.main }}
+          <li><a href="{{ .URL }}"{{ if $.IsMenuCurrent "main" . }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+          {{- end }}
+        </ul>
+      </nav>
+    </details>
+    {{- /* Inline and synchronous, and placed immediately after the element so
+           it runs the moment that element is parsed, before first paint. A
+           deferred script would let the open panel flash on a phone. */ -}}
+    <script>
+      if (window.matchMedia && matchMedia("(max-width: 40rem)").matches) {
+        document.currentScript.previousElementSibling.open = false;
+      }
+    </script>
+
+    {{ partial "lang-switch.html" . }}
+  </div>
+</header>

@@ -1,0 +1,61 @@
+@layer tokens {
+  :root {
+    color-scheme: light;
+
+    /* The sheet the content sits on. */
+    --bg:        #FAF7F0;
+    --bg-subtle: #F0EADC;
+    --fg:        #1A1814;
+    --fg-muted:  #5F594C;
+    --rule:      #DCD3C2;
+    /* Section headings: the lapis of the medallion in the tilework. */
+    --heading:   #1E1A4D;
+
+    /* Sampled from the background photograph (assets/images/background.jpg)
+       and adjusted only as far as needed to clear WCAG AA. The bar always
+       carries white text; --nav-accent is the hover/current colour on it. */
+    --accent:       #2E7FA6;  /* link colour on the light page */
+    --accent-fg:    #FFFFFF;
+    --nav-bg:       #1E1A4D;  /* the star's navy, lifted slightly — 15.3:1 with white */
+    /* The field blue of the tiles themselves, darkened until white clears
+       4.5:1 on it (4.59), so the bar looks like part of the photograph
+       rather than a band set against it. */
+    --nav-bg-light: #3D7BA5;
+    --nav-fg:       #FFFFFF;
+    --nav-accent:   #E8B33C;  /* the saffron of the vine borders */
+
+    --font-body:    "Serif VF", Georgia, serif;
+    --font-ui:      "Sans VF", system-ui, sans-serif;
+    --font-display: var(--font-body);
+    --font-mono:    ui-monospace, SFMono-Regular, monospace;
+
+    --radius:     2px;
+    --rule-width: 1px;
+
+    --measure:       66ch;
+    --leading-body:  1.68;
+    --leading-tight: 1.2;
+
+    --size-body:  1rem;
+    --scale-h1:   clamp(2rem, 1.4rem + 2.4vw, 3rem);
+    --scale-h2:   clamp(1.4rem, 1.2rem + 0.8vw, 1.75rem);
+    --scale-h3:   1.15rem;
+
+    --space-section: clamp(2.5rem, 6vw, 4rem);
+    --space-gutter:  clamp(1.25rem, 4vw, 2.5rem);
+    --space-flow:    1.1em;
+
+    /* The sheet over the photograph. */
+    --sheet-alpha: 0.94;
+    --sheet-blur:  6px;
+
+    /* The opening band. The name does not need half a screen, and the sooner
+       the sheet appears the sooner the page reads as a page rather than as a
+       splash. min-block-size on .banner keeps it usable on a short window. */
+    --hero-block: 36svh;
+  }
+
+  @media (max-width: 40rem) {
+    :root { --hero-block: 30svh; }
+  }
+}

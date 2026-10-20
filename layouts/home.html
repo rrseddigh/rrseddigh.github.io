@@ -1,0 +1,39 @@
+{{ define "main" }}
+  {{ partial "page-head.html" . }}
+  {{- /* The portrait sits beside the blurb on a wide screen and above it on a
+         narrow one. It is a resource of the home page in the default language,
+         so the French home reaches it through the English page rather than
+         keeping a copy. */ -}}
+  {{- $photo := .Resources.GetMatch "profile.*" -}}
+  {{- with (index (where hugo.Sites "Language.Name" "en") 0).Home.Resources.GetMatch "profile.*" }}
+    {{- $photo = . -}}
+  {{- end }}
+  <div class="intro{{ if $photo }} intro--with-photo{{ end }}">
+    {{- with $photo }}
+      {{- $sm := .Fill "440x560 webp q82 Center" -}}
+      {{- $lg := .Fill "880x1120 webp q80 Center" -}}
+    <img class="intro__photo"
+         srcset="{{ $sm.RelPermalink }} 440w, {{ $lg.RelPermalink }} 880w"
+         sizes="(max-width: 48rem) 60vw, 15rem"
+         src="{{ $sm.RelPermalink }}"
+         width="{{ $sm.Width }}" height="{{ $sm.Height }}"
+         alt="{{ i18n "portrait_alt" (dict "name" $.Title) }}"
+         decoding="async">
+    {{- end }}
+    {{- /* The links live INSIDE the column beside the portrait, not under the
+           whole grid. Under the grid they began below whichever of the two was
+           taller, and that is always the portrait — about 19rem of it — so the
+           reader had to scroll past a photograph to find out what the site
+           contains.
+
+           A wrapper rather than putting them straight into .intro__text: the
+           prose stays capped at one reading measure, while the links take the
+           full width of the column. */ -}}
+    <div class="intro__col">
+      <article class="prose intro__text">
+        {{ .Content }}
+      </article>
+      {{ partial "section-cards.html" . }}
+    </div>
+  </div>
+{{ end }}

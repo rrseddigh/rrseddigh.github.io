@@ -1,0 +1,3 @@
+# Production only (a bare `hugo build` is production; `hugo server` runs as
+# development and never reads this file).
+baseURL = 'https://rrseddigh.github.io/'

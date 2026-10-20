@@ -1,0 +1,25 @@
+# ─────────────────────────────────────────────────────────────────────────
+# ALL top-level keys must appear BEFORE the first [table] header.
+# TOML scopes every key after a header into that table, so a key placed
+# below [person] silently becomes person.<key> and reads as empty everywhere.
+# ─────────────────────────────────────────────────────────────────────────
+
+# true → noindex,nofollow site-wide + robots.txt Disallow: /
+staging = true
+
+# ── Identity ──────────────────────────────────────────────────────────────
+email  = 'rrseddigh@ucdavis.edu'
+github = 'rrseddigh'
+
+ucdavisProfile = 'https://physics.ucdavis.edu/people/graduate-students/remi-seddigh'
+orcid       = '0009-0003-4061-2140'
+linkedin    = 'https://www.linkedin.com/in/remi-seddigh/'
+arxivAuthor = ''
+scholar     = ''
+
+# ── Tables (must come last) ───────────────────────────────────────────────
+
+[person]
+  givenName      = 'Remi'
+  familyName     = 'Seddigh'
+  alternateNames = ['Rémi Seddigh']
