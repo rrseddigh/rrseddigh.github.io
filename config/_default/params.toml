@@ -5,7 +5,7 @@
 # ─────────────────────────────────────────────────────────────────────────
 
 # true → noindex,nofollow site-wide + robots.txt Disallow: /
-staging = true
+staging = false
 
 # ── Identity ──────────────────────────────────────────────────────────────
 email  = 'rrseddigh@ucdavis.edu'
